@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background color -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#2196F3" />
+        </shape>
+    </item>
+    <!-- Simple medication icon -->
+    <item
+        android:width="48dp"
+        android:height="48dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" />
+            <size
+                android:width="48dp"
+                android:height="48dp" />
+        </shape>
+    </item>
+    <item
+        android:width="32dp"
+        android:height="4dp"
+        android:gravity="center">
+        <shape android:shape="rectangle">
+            <solid android:color="#2196F3" />
+        </shape>
+    </item>
+</layer-list>

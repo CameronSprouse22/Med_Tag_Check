@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Interval Hours Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hours between doses *"
+        android:paddingBottom="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_interval_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="8" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Helper Text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter hours between 1 and 24"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary"
+        android:paddingBottom="16dp" />
+
+    <!-- End Date Toggle -->
+    <CheckBox
+        android:id="@+id/checkbox_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set end date (optional)"
+        android:paddingBottom="8dp" />
+
+    <!-- End Date Picker Button -->
+    <Button
+        android:id="@+id/button_select_end_date"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select End Date"
+        android:visibility="gone" />
+
+    <!-- Selected End Date Display -->
+    <TextView
+        android:id="@+id/text_selected_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:visibility="gone"
+        android:paddingTop="4dp" />
+
+</LinearLayout>

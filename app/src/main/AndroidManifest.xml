@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- NFC Permissions (T004) -->
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+
+    <!-- Alarm Permissions (T005) -->
+    <!-- For API 31+ (Android 12+): exact alarm scheduling -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    
+    <!-- Boot receiver to reschedule alarms after device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Notification Permissions (T006) -->
+    <!-- For API 33+ (Android 13+): post notifications -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Vibration for haptic feedback -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Future emergency contact features (Phase 12 - User Story 6) -->
+    <!-- SMS permission - not required for MVP, uncomment when implementing US6 -->
+    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
+    
+    <!-- Call permission - not required for MVP, uncomment when implementing US6 -->
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    
+    <!-- Location for emergency notifications - not required for MVP, uncomment when implementing US6 -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MedCheckTag"
+        tools:targetApi="31">
+
+        <!-- MainActivity will be added in Phase 4 (User Story 3) -->
+        <!-- Activities, Receivers, Services will be registered here as implemented -->
+
+        <!-- Main Activity (T079 - Phase 4, User Story 3) - Launcher Activity -->
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Settings Activity (Phase 4, User Story 3) -->
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:label="Settings"
+            android:parentActivityName=".ui.main.MainActivity" />
+
+        <!-- Add Medication Activity (T060 - Phase 3, User Story 2) -->
+        <activity
+            android:name=".ui.medication.AddMedicationActivity"
+            android:exported="false"
+            android:label="Add Medication"
+            android:parentActivityName=".ui.main.MainActivity" />
+
+        <!-- Alarm Receiver (T037, T039) -->
+        <receiver
+            android:name=".alarms.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!-- Boot Receiver (T038, T039) - Reschedules alarms after reboot -->
+        <receiver
+            android:name=".alarms.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

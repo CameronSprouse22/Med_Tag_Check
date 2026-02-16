@@ -1,0 +1,142 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Med Check Tag</string>
+
+    <!-- Medication Categories -->
+    <string name="category_life_dependent">Life Dependent</string>
+    <string name="category_very_important">Very Important</string>
+    <string name="category_beneficial">Beneficial</string>
+
+    <!-- Common Actions -->
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_ok">OK</string>
+
+    <!-- Common Labels -->
+    <string name="label_medication_nickname">Medication Nickname</string>
+    <string name="label_dose">Dose Amount</string>
+    <string name="label_remaining_doses">Remaining Doses</string>
+    <string name="label_next_dose_time">Next Dose Time</string>
+    <string name="label_category">Category</string>
+    <string name="label_schedule">Schedule</string>
+
+    <!-- Common Messages -->
+    <string name="msg_loading">Loading…</string>
+    <string name="msg_saving">Saving…</string>
+    <string name="msg_save_success">Saved successfully</string>
+    <string name="msg_save_failed">Save failed</string>
+    <string name="msg_delete_success">Deleted successfully</string>
+    <string name="msg_delete_failed">Delete failed</string>
+
+    <!-- Validation Messages -->
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_number">Invalid number</string>
+    <string name="error_invalid_time">Invalid time format</string>
+
+    <!-- NFC Messages -->
+    <string name="nfc_disabled">NFC is disabled. Please enable NFC in settings.</string>
+    <string name="nfc_not_available">NFC is not available on this device.</string>
+    <string name="nfc_tag_not_recognized">Tag not recognized</string>
+    <string name="nfc_read_error">Failed to read NFC tag</string>
+    <string name="nfc_write_success">Tag written successfully</string>
+    <string name="nfc_scan_prompt">Hold phone near tag</string>
+
+    <!-- Status Messages -->
+    <string name="status_overdue">Overdue</string>
+    <string name="status_inactive">Inactive</string>
+    <string name="status_active">Active</string>
+
+    <!-- Time Format -->
+    <string name="time_format_hours">%d hours</string>
+    <string name="time_format_minutes">%d minutes</string>
+    <string name="time_format_hour">1 hour</string>
+    <string name="time_format_minute">1 minute</string>
+
+    <!-- User Story 2: Add Medication (T061) -->
+    <string name="add_medication_title">Add New Medication</string>
+    <string name="label_medication_nickname_required">Medication Nickname *</string>
+    <string name="label_dose_required">Dose Amount *</string>
+    <string name="label_medication_info_optional">Notes/Instructions (optional)</string>
+    <string name="label_category_required">Importance Category *</string>
+    <string name="label_max_dose_count_required">Maximum Dose Count *</string>
+    <string name="label_refill_threshold1_required">First Refill Warning (doses remaining) *</string>
+    <string name="label_refill_threshold2_required">Second Refill Alarm (doses remaining) *</string>
+    <string name="label_schedule_type">Schedule Type *</string>
+    <string name="label_interval_hours">Hours between doses *</string>
+    <string name="label_specific_times">Daily dose times</string>
+    <string name="label_end_date_optional">Set end date (optional)</string>
+    
+    <string name="radio_interval">Every X Hours</string>
+    <string name="radio_specific_times">Specific Times</string>
+    
+    <string name="button_save_and_write_tag">Save &amp; Write Tag</string>
+    <string name="button_add_time">+ Add Time</string>
+    <string name="button_select_end_date">Select End Date</string>
+    
+    <string name="hint_interval_hours">Enter hours between 1 and 24</string>
+    <string name="hint_specific_times_empty">No times added yet. Tap \'+ Add Time\' to begin.</string>
+    <string name="hint_specific_times_help">Add at least one time. Times will automatically sort chronologically.</string>
+    
+    <string name="validation_nickname_required">Medication nickname is required</string>
+    <string name="validation_nickname_too_long">Medication nickname must be 50 characters or less</string>
+    <string name="validation_dose_required">Dose amount is required</string>
+    <string name="validation_dose_too_long">Dose must be 50 characters or less</string>
+    <string name="validation_info_too_long">Medication info must be 500 characters or less</string>
+    <string name="validation_category_required">Medication category is required</string>
+    <string name="validation_max_dose_count_invalid">Max dose count must be at least 1</string>
+    <string name="validation_refill_thresholds_required">Refill thresholds are required</string>
+    <string name="validation_refill_threshold2_negative">Refill threshold 2 cannot be negative</string>
+    <string name="validation_refill_threshold1_must_be_greater">First refill threshold must be greater than second threshold</string>
+    <string name="validation_refill_threshold1_exceeds_max">First refill threshold cannot exceed max dose count</string>
+    <string name="validation_schedule_type_required">Schedule type is required</string>
+    <string name="validation_interval_hours_invalid">Interval hours must be between 1 and 24</string>
+    <string name="validation_specific_times_required">At least one specific time is required</string>
+    <string name="validation_pre_alarm_minutes_invalid">Pre-alarm minutes must be between 1 and 60</string>
+    <string name="validation_post_alarm_minutes_invalid">Post-alarm minutes must be between 1 and 120</string>
+    
+    <string name="msg_medication_saved">Medication saved successfully</string>
+    <string name="msg_medication_saved_write_later">Medication saved. You can write NFC tag later.</string>
+    <string name="msg_medication_added_success">Medication added successfully!</string>
+    
+    <string name="nfc_write_title">Write NFC Tag</string>
+    <string name="nfc_write_instructions">Hold your phone near the NFC tag to write medication information</string>
+    <string name="nfc_write_waiting">Waiting for tag...</string>
+    <string name="nfc_write_writing">Writing to tag...</string>
+    <string name="nfc_write_success_status">Success! Tag written.</string>
+    <string name="nfc_write_failed">Write failed. Please try again.</string>
+    <string name="nfc_verification_failed">Tag verification failed</string>
+    <string name="nfc_write_error">Error writing tag: %s</string>
+    <string name="nfc_tag_written_successfully">NFC tag written successfully</string>
+    <string name="nfc_tag_save_error">Error saving tag: %s</string>
+    <string name="nfc_tag_written_but_save_failed">Tag written but failed to save: %s</string>
+    
+    <string name="format_end_date">End date: %s</string>
+    <string name="alarm_settings_default">Default alarm settings will be applied</string>
+    <string name="alarm_settings_title">Alarm Settings</string>
+    
+    <!-- User Story 3: Medication List View (T080) -->
+    <string name="empty_state_icon">No medications icon</string>
+    <string name="empty_state_title">No Medications Yet</string>
+    <string name="empty_state_message">Tap \"Add Medication\" below to get started</string>
+    
+    <string name="med_refilled">Med Refilled</string>
+    <string name="info">Info</string>
+    <string name="write_tag">Write Tag</string>
+    <string name="settings">Settings</string>
+    <string name="read_tag">Scan Tag</string>
+    <string name="add_medication">Add Med</string>
+    
+    <string name="overdue">OVERDUE</string>
+    <string name="inactive">INACTIVE</string>
+    
+    <string name="doses_remaining">%d doses remaining</string>
+    <string name="countdown_format_hours" formatted="false">%dh %dm</string>
+    <string name="countdown_format_minutes">%dm</string>
+    
+    <string name="refill_success">Medication refilled successfully</string>
+    <string name="refill_failed">Failed to update medication</string>
+</resources>
+
