@@ -3,6 +3,7 @@ package com.medchecktag.models;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -68,6 +69,7 @@ public class Medication {
     /**
      * Constructor for creating new medication
      */
+    @Ignore
     public Medication(@NonNull String id, @NonNull String nickname, @NonNull String dose,
                       @NonNull MedicationCategory category, int maxDoseCount,
                       int refillThreshold1, int refillThreshold2,

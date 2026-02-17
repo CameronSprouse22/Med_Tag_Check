@@ -112,6 +112,21 @@ public class MainActivity extends AppCompatActivity {
         // Adapter will stop timer updates automatically
     }
     
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (adapter != null) {
+            adapter.stopCountdownUpdates();
+        }
+    }
+    
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        // Handle NFC intents when app is already running
+    }
+    
     private void setupBottomNavigation() {
         // Settings button
         findViewById(R.id.button_settings).setOnClickListener(v -> {

@@ -2,7 +2,6 @@ package com.medchecktag.ui.main;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;

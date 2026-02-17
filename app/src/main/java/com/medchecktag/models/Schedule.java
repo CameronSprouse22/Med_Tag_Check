@@ -1,6 +1,6 @@
 package com.medchecktag.models;
 
-import androidx.room.Embedded;
+import androidx.room.Ignore;
 
 import java.util.List;
 
@@ -49,6 +49,7 @@ public class Schedule {
     /**
      * Constructor for interval-based schedule
      */
+    @Ignore
     public Schedule(int intervalHours) {
         this.scheduleType = ScheduleType.INTERVAL;
         this.intervalHours = intervalHours;
@@ -58,6 +59,7 @@ public class Schedule {
     /**
      * Constructor for specific times schedule
      */
+    @Ignore
     public Schedule(List<String> specificTimes) {
         this.scheduleType = ScheduleType.SPECIFIC_TIMES;
         this.intervalHours = null;

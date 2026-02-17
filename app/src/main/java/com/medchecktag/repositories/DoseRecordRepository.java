@@ -66,15 +66,15 @@ public class DoseRecordRepository {
      * Get most recent dose record synchronously
      */
     public DoseRecord getLastDoseRecord(String medicationId) {
-        return doseRecordDao.getByIdSync(medicationId);
+        return doseRecordDao.getLastByMedicationIdSync(medicationId);
     }
     
     // Mutation Operations
     
     public void insertDoseRecord(DoseRecord record, MedicationRepository.OnResultCallback<Long> callback) {
-        validateDoseRecord(record);
         executor.execute(() -> {
             try {
+                validateDoseRecord(record);
                 doseRecordDao.insert(record);
                 if (callback != null) {
                     callback.onSuccess(1L);

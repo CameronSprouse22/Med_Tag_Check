@@ -2,6 +2,7 @@ package com.medchecktag.models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -41,6 +42,7 @@ public class EmergencyContact {
     /**
      * Constructor for creating new emergency contact
      */
+    @Ignore
     public EmergencyContact(@NonNull String id, @NonNull String name,
                             @NonNull String phoneNumber, String email) {
         this.id = id;
@@ -57,6 +59,7 @@ public class EmergencyContact {
     /**
      * Constructor with custom trigger settings
      */
+    @Ignore
     public EmergencyContact(@NonNull String id, @NonNull String name,
                             @NonNull String phoneNumber, String email,
                             int triggerMissedDoses, boolean onlyLifeDependentMeds) {

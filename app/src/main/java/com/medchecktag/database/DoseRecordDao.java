@@ -35,6 +35,9 @@ public interface DoseRecordDao {
     @Query("SELECT * FROM dose_records WHERE id = :id LIMIT 1")
     DoseRecord getByIdSync(String id);
     
+    @Query("SELECT * FROM dose_records WHERE medicationId = :medicationId ORDER BY scheduledTime DESC LIMIT 1")
+    DoseRecord getLastByMedicationIdSync(String medicationId);
+    
     @Query("SELECT * FROM dose_records WHERE medicationId = :medicationId ORDER BY scheduledTime DESC")
     LiveData<List<DoseRecord>> getByMedicationId(String medicationId);
     

@@ -53,6 +53,7 @@ public class AlarmConfiguration {
     /**
      * Constructor with all alarm types
      */
+    @androidx.room.Ignore
     public AlarmConfiguration(boolean preAlarm, Integer preMinutes, 
                               boolean onTime, 
                               boolean postAlarm, Integer postMinutes) {

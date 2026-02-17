@@ -11,7 +11,6 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.medchecktag.R;
 import com.medchecktag.models.AlarmType;
 
 /**
@@ -109,6 +108,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (appIntent != null) {
             appIntent.putExtra("medication_id", medicationId);
             appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        } else {
+            // Fallback: create a generic intent if launch intent is unavailable
+            appIntent = new Intent();
         }
         
         PendingIntent pendingIntent = PendingIntent.getActivity(

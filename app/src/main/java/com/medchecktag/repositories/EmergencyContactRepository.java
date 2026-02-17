@@ -68,9 +68,9 @@ public class EmergencyContactRepository {
     // Mutation Operations
     
     public void insertContact(EmergencyContact contact, MedicationRepository.OnResultCallback<Long> callback) {
-        validateEmergencyContact(contact);
         executor.execute(() -> {
             try {
+                validateEmergencyContact(contact);
                 emergencyContactDao.insert(contact);
                 if (callback != null) {
                     callback.onSuccess(1L);
@@ -84,9 +84,9 @@ public class EmergencyContactRepository {
     }
     
     public void updateContact(EmergencyContact contact, MedicationRepository.OnResultCallback<Integer> callback) {
-        validateEmergencyContact(contact);
         executor.execute(() -> {
             try {
+                validateEmergencyContact(contact);
                 emergencyContactDao.update(contact);
                 if (callback != null) {
                     callback.onSuccess(1);

@@ -51,9 +51,9 @@ public class AppSettingsRepository {
     // Mutation Operations
     
     public void updateSettings(AppSettings settings, MedicationRepository.OnResultCallback<Integer> callback) {
-        validateAppSettings(settings);
         executor.execute(() -> {
             try {
+                validateAppSettings(settings);
                 // Ensure singleton ID
                 settings.id = AppSettings.getSingletonId();
                 settings.updatedAt = System.currentTimeMillis();

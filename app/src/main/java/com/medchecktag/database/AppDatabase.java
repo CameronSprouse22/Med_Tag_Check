@@ -26,7 +26,7 @@ import com.medchecktag.models.NFCTag;
         AppSettings.class
     },
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {

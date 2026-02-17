@@ -1,14 +1,15 @@
 package com.medchecktag.audio;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -21,12 +22,12 @@ public class AudioFeedbackService {
     private static final AtomicInteger utteranceIdCounter = new AtomicInteger(0);
     
     private TextToSpeech tts;
-    private boolean isInitialized = false;
+    private volatile boolean isInitialized = false;
     private float volume = 0.8f;
     private float speechRate = 1.0f;
     private float pitch = 1.0f;
     
-    private final HashMap<String, TTSCallback> callbackMap = new HashMap<>();
+    private final ConcurrentHashMap<String, TTSCallback> callbackMap = new ConcurrentHashMap<>();
     
     /**
      * Initialize TTS engine
@@ -139,11 +140,11 @@ public class AudioFeedbackService {
             callbackMap.put(utteranceId, callback);
         }
         
-        HashMap<String, String> params = new HashMap<>();
-        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
-        params.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(volume));
+        Bundle params = new Bundle();
+        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
+        params.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume);
         
-        int result = tts.speak(message, TextToSpeech.QUEUE_ADD, params);
+        int result = tts.speak(message, TextToSpeech.QUEUE_ADD, params, utteranceId);
         
         if (result == TextToSpeech.ERROR) {
             Log.e(TAG, "Failed to queue speech: " + message);

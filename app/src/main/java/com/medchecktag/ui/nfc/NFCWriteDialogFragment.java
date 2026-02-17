@@ -1,9 +1,10 @@
 package com.medchecktag.ui.nfc;
 
-import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,10 +113,13 @@ public class NFCWriteDialogFragment extends DialogFragment {
     
     private void enableForegroundDispatch() {
         if (nfcAdapter != null && getActivity() != null) {
+            int flags = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                ? PendingIntent.FLAG_MUTABLE
+                : 0;
             android.app.PendingIntent pendingIntent = android.app.PendingIntent.getActivity(
                 getActivity(), 0,
                 new Intent(getActivity(), getActivity().getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-                android.app.PendingIntent.FLAG_MUTABLE
+                flags
             );
             nfcAdapter.enableForegroundDispatch(getActivity(), pendingIntent, null, null);
         }
@@ -169,51 +173,66 @@ public class NFCWriteDialogFragment extends DialogFragment {
                             @Override
                             public void onSuccess(Long result) {
                                 // Success - tag saved
-                                requireActivity().runOnUiThread(() -> {
-                                    textStatus.setText("Success! Tag written.");
-                                    progressBar.setIndeterminate(false);
-                                    Toast.makeText(requireContext(), "NFC tag written successfully", Toast.LENGTH_SHORT).show();
-                                    
-                                    if (writeCompleteListener != null) {
-                                        writeCompleteListener.onWriteSuccess();
-                                    }
-                                    
-                                    dismiss();
-                                });
+                                android.app.Activity activity = getActivity();
+                                if (activity != null && isAdded()) {
+                                    activity.runOnUiThread(() -> {
+                                        textStatus.setText("Success! Tag written.");
+                                        progressBar.setIndeterminate(false);
+                                        Toast.makeText(activity, "NFC tag written successfully", Toast.LENGTH_SHORT).show();
+                                        
+                                        if (writeCompleteListener != null) {
+                                            writeCompleteListener.onWriteSuccess();
+                                        }
+                                        
+                                        dismiss();
+                                    });
+                                }
                             }
                             
                             @Override
                             public void onError(Exception error) {
                                 // Error saving tag
-                                requireActivity().runOnUiThread(() -> {
-                                    textStatus.setText("Tag written but failed to save: " + error.getMessage());
-                                    progressBar.setIndeterminate(false);
-                                    Toast.makeText(requireContext(), "Error saving tag: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                                });
+                                android.app.Activity activity = getActivity();
+                                if (activity != null && isAdded()) {
+                                    activity.runOnUiThread(() -> {
+                                        textStatus.setText("Tag written but failed to save: " + error.getMessage());
+                                        progressBar.setIndeterminate(false);
+                                        Toast.makeText(activity, "Error saving tag: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
+                                }
                             }
                         });
                     } else {
                         // Verification failed
-                        requireActivity().runOnUiThread(() -> {
-                            textStatus.setText("Write failed. Please try again.");
-                            progressBar.setIndeterminate(false);
-                            Toast.makeText(requireContext(), "Tag verification failed", Toast.LENGTH_SHORT).show();
-                        });
+                        android.app.Activity activity = getActivity();
+                        if (activity != null && isAdded()) {
+                            activity.runOnUiThread(() -> {
+                                textStatus.setText("Write failed. Please try again.");
+                                progressBar.setIndeterminate(false);
+                                Toast.makeText(activity, "Tag verification failed", Toast.LENGTH_SHORT).show();
+                            });
+                        }
                     }
                 } else {
                     // Write failed
-                    requireActivity().runOnUiThread(() -> {
-                        textStatus.setText("Write failed. Please try again.");
-                        progressBar.setIndeterminate(false);
-                        Toast.makeText(requireContext(), "Failed to write tag", Toast.LENGTH_SHORT).show();
-                    });
+                    android.app.Activity activity = getActivity();
+                    if (activity != null && isAdded()) {
+                        activity.runOnUiThread(() -> {
+                            textStatus.setText("Write failed. Please try again.");
+                            progressBar.setIndeterminate(false);
+                            Toast.makeText(activity, "Failed to write tag", Toast.LENGTH_SHORT).show();
+                        });
+                    }
                 }
             } catch (Exception e) {
-                requireActivity().runOnUiThread(() -> {
-                    textStatus.setText("Error: " + e.getMessage());
-                    progressBar.setIndeterminate(false);
-                    Toast.makeText(requireContext(), "Error writing tag: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                android.app.Activity activity = getActivity();
+                if (activity != null && isAdded()) {
+                    activity.runOnUiThread(() -> {
+                        textStatus.setText("Error: " + e.getMessage());
+                        progressBar.setIndeterminate(false);
+                        Toast.makeText(activity, "Error writing tag: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    });
+                }
             }
         }).start();
     }

@@ -82,7 +82,10 @@ public class Converters {
     
     @TypeConverter
     public static List<String> toStringList(String value) {
-        if (value == null || value.isEmpty()) {
+        if (value == null) {
+            return null;
+        }
+        if (value.isEmpty()) {
             return new ArrayList<>();
         }
         List<String> result = new ArrayList<>();

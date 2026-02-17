@@ -30,14 +30,17 @@ public class BootReceiver extends BroadcastReceiver {
             Intent.ACTION_MY_PACKAGE_REPLACED.equals(intent.getAction())) {
             
             Log.i(TAG, "Boot completed or package replaced, rescheduling alarms");
-            rescheduleAllAlarms(context);
+            
+            // Use goAsync() to prevent process from being killed before background work completes
+            final PendingResult pendingResult = goAsync();
+            rescheduleAllAlarms(context, pendingResult);
         }
     }
     
     /**
      * Reschedule all alarms for active medications
      */
-    private void rescheduleAllAlarms(Context context) {
+    private void rescheduleAllAlarms(Context context, final PendingResult pendingResult) {
         Executor executor = Executors.newSingleThreadExecutor();
         AppDatabase database = AppDatabase.getInstance(context);
         AlarmScheduler alarmScheduler = new AlarmScheduler(context);
@@ -54,12 +57,20 @@ public class BootReceiver extends BroadcastReceiver {
                 
                 int successCount = 0;
                 for (Medication medication : medications) {
-                    if (medication.schedule != null && 
-                        medication.schedule.nextDoseTime > System.currentTimeMillis()) {
+                    if (medication.schedule != null) {
+                        // Recalculate nextDoseTime for past-due medications
+                        if (medication.schedule.nextDoseTime <= System.currentTimeMillis()) {
+                            long newNextDose = com.medchecktag.utils.TimeUtils.calculateNextDoseTime(medication.schedule);
+                            if (newNextDose > 0) {
+                                medication.schedule.nextDoseTime = newNextDose;
+                            }
+                        }
                         
-                        boolean success = alarmScheduler.scheduleAlarmsForMedication(medication);
-                        if (success) {
-                            successCount++;
+                        if (medication.schedule.nextDoseTime > System.currentTimeMillis()) {
+                            boolean success = alarmScheduler.scheduleAlarmsForMedication(medication);
+                            if (success) {
+                                successCount++;
+                            }
                         }
                     }
                 }
@@ -69,6 +80,8 @@ public class BootReceiver extends BroadcastReceiver {
                 
             } catch (Exception e) {
                 Log.e(TAG, "Failed to reschedule alarms: " + e.getMessage(), e);
+            } finally {
+                pendingResult.finish();
             }
         });
     }

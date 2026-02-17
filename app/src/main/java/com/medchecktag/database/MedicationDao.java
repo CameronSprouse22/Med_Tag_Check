@@ -35,13 +35,13 @@ public interface MedicationDao {
     @Query("SELECT * FROM medications WHERE id = :id LIMIT 1")
     Medication getByIdSync(String id);
     
-    @Query("SELECT * FROM medications WHERE isActive = 1 ORDER BY category ASC, nickname ASC")
+    @Query("SELECT * FROM medications WHERE isActive = 1 ORDER BY CASE category WHEN 'LIFE_DEPENDENT' THEN 0 WHEN 'VERY_IMPORTANT' THEN 1 WHEN 'BENEFICIAL' THEN 2 ELSE 3 END ASC, nickname ASC")
     LiveData<List<Medication>> getAllActive();
     
-    @Query("SELECT * FROM medications WHERE isActive = 1 ORDER BY category ASC, nickname ASC")
+    @Query("SELECT * FROM medications WHERE isActive = 1 ORDER BY CASE category WHEN 'LIFE_DEPENDENT' THEN 0 WHEN 'VERY_IMPORTANT' THEN 1 WHEN 'BENEFICIAL' THEN 2 ELSE 3 END ASC, nickname ASC")
     List<Medication> getAllActiveSync();
     
-    @Query("SELECT * FROM medications ORDER BY isActive DESC, category ASC, nickname ASC")
+    @Query("SELECT * FROM medications ORDER BY isActive DESC, CASE category WHEN 'LIFE_DEPENDENT' THEN 0 WHEN 'VERY_IMPORTANT' THEN 1 WHEN 'BENEFICIAL' THEN 2 ELSE 3 END ASC, nickname ASC")
     LiveData<List<Medication>> getAll();
     
     @Query("SELECT * FROM medications WHERE category = :category AND isActive = 1 ORDER BY nickname ASC")
@@ -53,8 +53,8 @@ public interface MedicationDao {
     @Query("SELECT * FROM medications WHERE remainingDoses <= refillThreshold1 AND remainingDoses > refillThreshold2 AND isActive = 1")
     LiveData<List<Medication>> getWarningRefillMedications();
     
-    @Query("UPDATE medications SET remainingDoses = :newCount WHERE id = :medicationId")
-    void updateRemainingDoses(String medicationId, int newCount);
+    @Query("UPDATE medications SET remainingDoses = :newCount, updatedAt = :updatedAt WHERE id = :medicationId")
+    void updateRemainingDoses(String medicationId, int newCount, long updatedAt);
     
     @Query("UPDATE medications SET isActive = :isActive, updatedAt = :updatedAt WHERE id = :medicationId")
     void updateActiveStatus(String medicationId, boolean isActive, long updatedAt);

@@ -13,6 +13,7 @@ import com.medchecktag.models.MedicationCategory;
 import com.medchecktag.models.Schedule;
 import com.medchecktag.models.ScheduleType;
 import com.medchecktag.repositories.MedicationRepository;
+import com.medchecktag.utils.TimeUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -379,8 +380,8 @@ public class AddMedicationViewModel extends AndroidViewModel {
         if (type == ScheduleType.INTERVAL) {
             schedule.nextDoseTime = now + (intervalHours.getValue() * 60 * 60 * 1000L);
         } else {
-            // For specific times, calculate next occurrence
-            schedule.nextDoseTime = now; // Placeholder - will be calculated by TimeUtils
+            // For specific times, calculate next occurrence using TimeUtils
+            schedule.nextDoseTime = TimeUtils.calculateNextDoseTime(schedule);
         }
         
         return schedule;

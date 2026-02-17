@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -55,6 +56,7 @@ public class DoseRecord {
     /**
      * Constructor for creating new dose record
      */
+    @Ignore
     public DoseRecord(@NonNull String id, @NonNull String medicationId,
                       long scheduledTime, @NonNull DoseStatus status,
                       @NonNull ConfirmationMethod confirmationMethod) {
@@ -74,6 +76,7 @@ public class DoseRecord {
     /**
      * Constructor with takenTime for recording past events
      */
+    @Ignore
     public DoseRecord(@NonNull String id, @NonNull String medicationId,
                       long scheduledTime, Long takenTime, @NonNull DoseStatus status,
                       @NonNull ConfirmationMethod confirmationMethod, String notes) {

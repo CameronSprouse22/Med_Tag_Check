@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -49,6 +50,7 @@ public class NFCTag {
     /**
      * Constructor for creating new NFC tag
      */
+    @Ignore
     public NFCTag(@NonNull String id, @NonNull String tagId,
                   @NonNull String medicationId, String tagLabel) {
         this.id = id;

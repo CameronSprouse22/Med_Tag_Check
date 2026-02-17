@@ -86,7 +86,14 @@ public class MedicationListAdapter extends ListAdapter<Medication, MedicationVie
             
             @Override
             public boolean areContentsTheSame(@NonNull Medication oldItem, @NonNull Medication newItem) {
-                // Compare relevant fields
+                // Compare relevant fields with null safety
+                if (oldItem.schedule == null || newItem.schedule == null) {
+                    return oldItem.nickname.equals(newItem.nickname)
+                        && oldItem.dose.equals(newItem.dose)
+                        && oldItem.remainingDoses == newItem.remainingDoses
+                        && oldItem.isActive == newItem.isActive
+                        && (oldItem.schedule == newItem.schedule);
+                }
                 return oldItem.nickname.equals(newItem.nickname)
                     && oldItem.dose.equals(newItem.dose)
                     && oldItem.remainingDoses == newItem.remainingDoses

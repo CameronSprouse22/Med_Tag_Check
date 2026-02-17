@@ -71,10 +71,9 @@ public class NFCTagRepository {
     // Mutation Operations
     
     public void insertNFCTag(NFCTag tag, MedicationRepository.OnResultCallback<Long> callback) {
-        validateNFCTag(tag);
-        
         executor.execute(() -> {
             try {
+                validateNFCTag(tag);
                 // Check if tag already assigned
                 if (isTagAlreadyAssigned(tag.tagId)) {
                     if (callback != null) {
@@ -96,9 +95,9 @@ public class NFCTagRepository {
     }
     
     public void updateNFCTag(NFCTag tag, MedicationRepository.OnResultCallback<Integer> callback) {
-        validateNFCTag(tag);
         executor.execute(() -> {
             try {
+                validateNFCTag(tag);
                 nfcTagDao.update(tag);
                 if (callback != null) {
                     callback.onSuccess(1);

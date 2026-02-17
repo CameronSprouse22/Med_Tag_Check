@@ -69,9 +69,9 @@ public class MedicationRepository {
     // Mutation Operations
     
     public void insertMedication(Medication medication, OnResultCallback<Long> callback) {
-        validateMedication(medication);
         executor.execute(() -> {
             try {
+                validateMedication(medication);
                 medicationDao.insert(medication);
                 if (callback != null) {
                     callback.onSuccess(1L);
@@ -85,9 +85,9 @@ public class MedicationRepository {
     }
     
     public void updateMedication(Medication medication, OnResultCallback<Integer> callback) {
-        validateMedication(medication);
         executor.execute(() -> {
             try {
+                validateMedication(medication);
                 medicationDao.update(medication);
                 if (callback != null) {
                     callback.onSuccess(1);
@@ -162,7 +162,7 @@ public class MedicationRepository {
         
         executor.execute(() -> {
             try {
-                medicationDao.updateRemainingDoses(medicationId, newCount);
+                medicationDao.updateRemainingDoses(medicationId, newCount, System.currentTimeMillis());
                 if (callback != null) {
                     callback.onSuccess(1);
                 }

@@ -15,9 +15,12 @@ import java.util.TimeZone;
  */
 public class TimeUtils {
     
-    private static final SimpleDateFormat TIME_FORMAT_24H = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
-    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("MMM d, yyyy HH:mm", Locale.getDefault());
+    private static final ThreadLocal<SimpleDateFormat> TIME_FORMAT_24H = ThreadLocal.withInitial(
+        () -> new SimpleDateFormat("HH:mm", Locale.getDefault()));
+    private static final ThreadLocal<SimpleDateFormat> DATE_FORMAT = ThreadLocal.withInitial(
+        () -> new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()));
+    private static final ThreadLocal<SimpleDateFormat> DATE_TIME_FORMAT = ThreadLocal.withInitial(
+        () -> new SimpleDateFormat("MMM d, yyyy HH:mm", Locale.getDefault()));
     
     /**
      * Calculate next dose time based on schedule configuration
@@ -50,6 +53,11 @@ public class TimeUtils {
     private static long calculateNextIntervalDoseTime(Schedule schedule, long currentTime) {
         if (schedule.lastDoseTime == null || schedule.lastDoseTime == 0) {
             // No previous dose, start from now
+            return currentTime;
+        }
+        
+        if (schedule.intervalHours == null || schedule.intervalHours <= 0) {
+            // Invalid interval, default to current time
             return currentTime;
         }
         
@@ -132,21 +140,21 @@ public class TimeUtils {
      * Format timestamp to time string (HH:mm)
      */
     public static String formatTime(long timestampMillis) {
-        return TIME_FORMAT_24H.format(new Date(timestampMillis));
+        return TIME_FORMAT_24H.get().format(new Date(timestampMillis));
     }
     
     /**
      * Format timestamp to date string (MMM d, yyyy)
      */
     public static String formatDate(long timestampMillis) {
-        return DATE_FORMAT.format(new Date(timestampMillis));
+        return DATE_FORMAT.get().format(new Date(timestampMillis));
     }
     
     /**
      * Format timestamp to date-time string (MMM d, yyyy HH:mm)
      */
     public static String formatDateTime(long timestampMillis) {
-        return DATE_TIME_FORMAT.format(new Date(timestampMillis));
+        return DATE_TIME_FORMAT.get().format(new Date(timestampMillis));
     }
     
     /**
@@ -228,7 +236,7 @@ public class TimeUtils {
      */
     public static int getTimeZoneOffsetHours() {
         TimeZone tz = TimeZone.getDefault();
-        int offsetMillis = tz.getRawOffset();
+        int offsetMillis = tz.getOffset(System.currentTimeMillis());
         return offsetMillis / (60 * 60 * 1000);
     }
 }

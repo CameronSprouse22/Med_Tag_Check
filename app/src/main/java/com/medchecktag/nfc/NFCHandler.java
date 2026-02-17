@@ -42,20 +42,31 @@ public class NFCHandler {
             NdefMessage ndefMessage = ndef.getNdefMessage();
             
             if (ndefMessage == null) {
-                ndef.close();
                 throw new NFCReadException(NFCReadException.ErrorType.NO_NDEF_MESSAGE, "Tag contains no NDEF message");
             }
             
             NdefRecord[] records = ndefMessage.getRecords();
             if (records.length == 0) {
-                ndef.close();
                 return null; // Empty tag
             }
             
-            // Read first text record
+            // Read first text record - NFC Forum Text Record has header bytes:
+            // byte 0: status byte (bit 7 = UTF encoding, bits 5-0 = language code length)
+            // bytes 1..n: language code (e.g. "en")
+            // remaining bytes: actual text payload
             NdefRecord record = records[0];
-            String payload = new String(record.getPayload(), StandardCharsets.UTF_8);
-            ndef.close();
+            byte[] rawPayload = record.getPayload();
+            if (rawPayload == null || rawPayload.length == 0) {
+                throw new NFCReadException(NFCReadException.ErrorType.INVALID_DATA_FORMAT,
+                    "Empty payload in NFC record");
+            }
+            int languageCodeLength = rawPayload[0] & 0x3F;
+            int textOffset = 1 + languageCodeLength;
+            if (textOffset >= rawPayload.length) {
+                throw new NFCReadException(NFCReadException.ErrorType.INVALID_DATA_FORMAT,
+                    "Payload too short to contain text data");
+            }
+            String payload = new String(rawPayload, textOffset, rawPayload.length - textOffset, StandardCharsets.UTF_8);
             
             // Validate format: "med:<UUID>"
             if (!payload.startsWith(MED_PREFIX)) {
@@ -76,6 +87,11 @@ public class NFCHandler {
         } catch (IOException | android.nfc.FormatException e) {
             throw new NFCReadException(NFCReadException.ErrorType.IO_ERROR, 
                 "Failed to read from tag: " + e.getMessage());
+        } finally {
+            try {
+                ndef.close();
+            } catch (IOException ignored) {
+            }
         }
     }
     
@@ -136,7 +152,6 @@ public class NFCHandler {
             
             // Write message
             ndef.writeNdefMessage(message);
-            ndef.close();
             
             // Verify write by reading back
             try {
@@ -150,6 +165,11 @@ public class NFCHandler {
         } catch (IOException | android.nfc.FormatException e) {
             throw new NFCWriteException(NFCWriteException.ErrorType.IO_ERROR, 
                 "Failed to write to tag: " + e.getMessage());
+        } finally {
+            try {
+                ndef.close();
+            } catch (IOException ignored) {
+            }
         }
     }
     
@@ -208,13 +228,19 @@ public class NFCHandler {
         
         try {
             ndef.connect();
-            NdefMessage emptyMessage = new NdefMessage(new NdefRecord[0]);
+            // Write an empty text record (NdefMessage requires at least 1 record)
+            NdefRecord emptyRecord = NdefRecord.createTextRecord("en", "");
+            NdefMessage emptyMessage = new NdefMessage(emptyRecord);
             ndef.writeNdefMessage(emptyMessage);
-            ndef.close();
             return true;
         } catch (IOException | android.nfc.FormatException e) {
             throw new NFCWriteException(NFCWriteException.ErrorType.IO_ERROR, 
                 "Failed to erase tag: " + e.getMessage());
+        } finally {
+            try {
+                ndef.close();
+            } catch (IOException ignored) {
+            }
         }
     }
     
