@@ -226,48 +226,48 @@ Android application structure (from [plan.md](plan.md)):
 
 #### ViewModel Layer
 
-- [ ] T087 [US1] Create DoseConfirmationViewModel in app/src/main/java/com/medchecktag/viewmodels/DoseConfirmationViewModel.java (handle dose confirmation, create DoseRecord, update medication, trigger audio)
+- [X] T087 [US1] Create DoseConfirmationViewModel in app/src/main/java/com/medchecktag/viewmodels/DoseConfirmationViewModel.java (handle dose confirmation, create DoseRecord, update medication, trigger audio)
 
 #### NFC Tag Discovery
 
-- [ ] T088 [US1] Update MainActivity to handle NFC tag discovery intents in onNewIntent() (TAG_DISCOVERED, NDEF_DISCOVERED actions)
-- [ ] T089 [US1] Enable foreground dispatch in MainActivity onResume() (NfcAdapter.enableForegroundDispatch)
-- [ ] T090 [US1] Disable foreground dispatch in MainActivity onPause() (NfcAdapter.disableForegroundDispatch)
-- [ ] T091 [US1] Add NFC intent filters to MainActivity in app/src/main/AndroidManifest.xml (TAG_DISCOVERED, NDEF_DISCOVERED actions)
+- [X] T088 [US1] Update MainActivity to handle NFC tag discovery intents in onNewIntent() (TAG_DISCOVERED, NDEF_DISCOVERED actions)
+- [X] T089 [US1] Enable foreground dispatch in MainActivity onResume() (NfcAdapter.enableForegroundDispatch)
+- [X] T090 [US1] Disable foreground dispatch in MainActivity onPause() (NfcAdapter.disableForegroundDispatch)
+- [X] T091 [US1] Add NFC intent filters to MainActivity in app/src/main/AndroidManifest.xml (TAG_DISCOVERED, NDEF_DISCOVERED actions)
 
 #### NFC Read Logic
 
-- [ ] T092 [US1] Implement tag read handler in MainActivity (call NFCHandler.readMedicationIdWithRetry(), handle exceptions, display errors)
-- [ ] T093 [US1] Implement medication lookup by tag ID in MainActivity (call MedicationRepository.getMedicationByTagId())
-- [ ] T094 [US1] Handle unrecognized tag error in MainActivity (display "Tag not recognized" message, speak error via AudioFeedbackService)
-- [ ] T095 [US1] Handle tag read failure in MainActivity (display retry prompt, speak error message)
+- [X] T092 [US1] Implement tag read handler in MainActivity (call NFCHandler.readMedicationIdWithRetry(), handle exceptions, display errors)
+- [X] T093 [US1] Implement medication lookup by tag ID in MainActivity (call MedicationRepository.getMedicationByTagId())
+- [X] T094 [US1] Handle unrecognized tag error in MainActivity (display "Tag not recognized" message, speak error via AudioFeedbackService)
+- [X] T095 [US1] Handle tag read failure in MainActivity (display retry prompt, speak error message)
 
 #### Dose Confirmation Logic
 
-- [ ] T096 [US1] Check if dose is due in DoseConfirmationViewModel (compare current time vs nextDoseTime, warn if too early per FR-020)
-- [ ] T097 [US1] Create DoseRecord in DoseConfirmationViewModel (status=TAKEN, confirmationMethod=NFC_SCAN, actualTime=now)
-- [ ] T098 [US1] Decrement remaining doses in DoseConfirmationViewModel (call MedicationRepository.updateRemainingDoses())
-- [ ] T099 [US1] Calculate next dose time in DoseConfirmationViewModel (use TimeUtils based on schedule type, update medication)
-- [ ] T100 [US1] Update medication in database with new nextDoseTime and remainingDoses
+- [X] T096 [US1] Check if dose is due in DoseConfirmationViewModel (compare current time vs nextDoseTime, warn if too early per FR-020)
+- [X] T097 [US1] Create DoseRecord in DoseConfirmationViewModel (status=TAKEN, confirmationMethod=NFC_SCAN, actualTime=now)
+- [X] T098 [US1] Decrement remaining doses in DoseConfirmationViewModel (call MedicationRepository.updateRemainingDoses())
+- [X] T099 [US1] Calculate next dose time in DoseConfirmationViewModel (use TimeUtils based on schedule type, update medication)
+- [X] T100 [US1] Update medication in database with new nextDoseTime and remainingDoses
 
 #### Audio Confirmation
 
-- [ ] T101 [US1] Format audio confirmation message in DoseConfirmationViewModel (use template: "[Medication], [Dose]. Next dose in [X hours/minutes]")
-- [ ] T102 [US1] Trigger audio feedback in MainActivity after successful scan (call AudioFeedbackService.speakMedicationConfirmation())
-- [ ] T103 [US1] Implement number-to-text conversion in AudioFeedbackService (convert 120 → "one hundred twenty minutes" or "two hours")
-- [ ] T104 [US1] Handle TTS initialization delay in AudioFeedbackService (queue speech if not ready, speak when initialized)
+- [X] T101 [US1] Format audio confirmation message in DoseConfirmationViewModel (use template: "[Medication], [Dose]. Next dose in [X hours/minutes]")
+- [X] T102 [US1] Trigger audio feedback in MainActivity after successful scan (call AudioFeedbackService.speakMedicationConfirmation())
+- [X] T103 [US1] Implement number-to-text conversion in AudioFeedbackService (convert 120 → "one hundred twenty minutes" or "two hours")
+- [X] T104 [US1] Handle TTS initialization delay in AudioFeedbackService (queue speech if not ready, speak when initialized)
 
 #### UI Feedback
 
-- [ ] T105 [US1] Create nfc_scan_success_dialog.xml in app/src/main/res/layout/nfc_scan_success_dialog.xml (show medication name, dose, next dose time, dismiss button)
-- [ ] T106 [US1] Create NFCScanSuccessDialogFragment in app/src/main/java/com/medchecktag/ui/nfc/NFCScanSuccessDialogFragment.java (display confirmation details, auto-dismiss after 3 seconds)
-- [ ] T107 [US1] Show success dialog in MainActivity after scan (launch NFCScanSuccessDialogFragment)
-- [ ] T108 [US1] Update medication list in MainActivity after scan (RecyclerView auto-updates via LiveData observation)
+- [X] T105 [US1] Create nfc_scan_success_dialog.xml in app/src/main/res/layout/nfc_scan_success_dialog.xml (show medication name, dose, next dose time, dismiss button)
+- [X] T106 [US1] Create NFCScanSuccessDialogFragment in app/src/main/java/com/medchecktag/ui/nfc/NFCScanSuccessDialogFragment.java (display confirmation details, auto-dismiss after 3 seconds)
+- [X] T107 [US1] Show success dialog in MainActivity after scan (launch NFCScanSuccessDialogFragment)
+- [X] T108 [US1] Update medication list in MainActivity after scan (RecyclerView auto-updates via LiveData observation)
 
 #### Resources
 
-- [ ] T109 [US1] Create string resources for User Story 1 in app/src/main/res/values/strings.xml (audio templates, error messages, confirmation text)
-- [ ] T110 [US1] Create NFC error drawable in app/src/main/res/drawable/ic_nfc_error.xml (vector icon for error states)
+- [X] T109 [US1] Create string resources for User Story 1 in app/src/main/res/values/strings.xml (audio templates, error messages, confirmation text)
+- [X] T110 [US1] Create NFC error drawable in app/src/main/res/drawable/ic_nfc_error.xml (vector icon for error states)
 
 **Checkpoint**: At this point, users can scan NFC tags to confirm doses with audio feedback. Core medication tracking is fully functional. **MVP COMPLETE** - Stories 1, 2, 3 deliver minimum viable product.
 
@@ -295,41 +295,41 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Alarm Scheduling Logic
 
-- [ ] T117 [US4] Implement scheduleAlarmsForMedication() in AlarmScheduler (calculate trigger times for pre/on-time/post alarms based on nextDoseTime)
-- [ ] T118 [US4] Generate unique request codes in AlarmScheduler (hash medicationId + alarmType to ensure uniqueness per alarm)
-- [ ] T119 [US4] Set exact alarms using AlarmManager.setExactAndAllowWhileIdle() in AlarmScheduler (handle API 31+ SCHEDULE_EXACT_ALARM permission)
-- [ ] T120 [US4] Schedule alarms after medication creation in AddMedicationViewModel (call AlarmScheduler.scheduleAlarmsForMedication())
-- [ ] T121 [US4] Reschedule alarms after dose confirmation in DoseConfirmationViewModel (call AlarmScheduler after updating nextDoseTime)
+- [X] T117 [US4] Implement scheduleAlarmsForMedication() in AlarmScheduler (calculate trigger times for pre/on-time/post alarms based on nextDoseTime)
+- [X] T118 [US4] Generate unique request codes in AlarmScheduler (hash medicationId + alarmType to ensure uniqueness per alarm)
+- [X] T119 [US4] Set exact alarms using AlarmManager.setExactAndAllowWhileIdle() in AlarmScheduler (handle API 31+ SCHEDULE_EXACT_ALARM permission)
+- [X] T120 [US4] Schedule alarms after medication creation in AddMedicationViewModel (call AlarmScheduler.scheduleAlarmsForMedication())
+- [X] T121 [US4] Reschedule alarms after dose confirmation in DoseConfirmationViewModel (call AlarmScheduler after updating nextDoseTime)
 
 #### Alarm Receiver Logic
 
-- [ ] T122 [US4] Implement onReceive() in AlarmReceiver (extract medicationId and alarmType from intent extras, query medication)
-- [ ] T123 [US4] Determine alarm action in AlarmReceiver (check alarmType: PRE_DOSE → notification; ON_TIME → notification + audio; POST_DOSE → persistent notification)
-- [ ] T124 [US4] Create notification channels in AlarmReceiver (three channels: PRE_DOSE, ON_TIME, POST_DOSE with different priorities)
-- [ ] T125 [US4] Build notification in AlarmReceiver using NotificationUtils (title: medication name, text: dose info, actions: Open App, Confirm, Skip)
-- [ ] T126 [US4] Add notification actions in AlarmReceiver (PendingIntents for "Confirm med taken" and "Medication skipped" buttons)
-- [ ] T127 [US4] Play alarm sound in AlarmReceiver (MediaPlayer for category-based sound, respect volume settings)
-- [ ] T128 [US4] Handle manual confirmation from notification in AlarmReceiver (create DoseRecord with MANUAL_CONFIRM, update medication, cancel alarm)
-- [ ] T129 [US4] Handle "Medication skipped" from notification in AlarmReceiver (create DoseRecord with SKIPPED status, reset timer, cancel alarm)
+- [X] T122 [US4] Implement onReceive() in AlarmReceiver (extract medicationId and alarmType from intent extras, query medication)
+- [X] T123 [US4] Determine alarm action in AlarmReceiver (check alarmType: PRE_DOSE → notification; ON_TIME → notification + audio; POST_DOSE → persistent notification)
+- [X] T124 [US4] Create notification channels in AlarmReceiver (three channels: PRE_DOSE, ON_TIME, POST_DOSE with different priorities)
+- [X] T125 [US4] Build notification in AlarmReceiver using NotificationUtils (title: medication name, text: dose info, actions: Open App, Confirm, Skip)
+- [X] T126 [US4] Add notification actions in AlarmReceiver (PendingIntents for "Confirm med taken" and "Medication skipped" buttons)
+- [X] T127 [US4] Play alarm sound in AlarmReceiver (MediaPlayer for category-based sound, respect volume settings)
+- [X] T128 [US4] Handle manual confirmation from notification in AlarmReceiver (create DoseRecord with MANUAL_CONFIRM, update medication, cancel alarm)
+- [X] T129 [US4] Handle "Medication skipped" from notification in AlarmReceiver (create DoseRecord with SKIPPED status, reset timer, cancel alarm)
 
 #### Alarm Queueing
 
-- [ ] T130 [US4] Implement simultaneous alarm queueing in AlarmReceiver (detect multiple active alarms, show one notification at a time, queue others)
-- [ ] T131 [US4] Prioritize alarms by category in AlarmReceiver (LIFE_DEPENDENT > VERY_IMPORTANT > BENEFICIAL when queueing)
+- [X] T130 [US4] Implement simultaneous alarm queueing in AlarmReceiver (detect multiple active alarms, show one notification at a time, queue others)
+- [X] T131 [US4] Prioritize alarms by category in AlarmReceiver (LIFE_DEPENDENT > VERY_IMPORTANT > BENEFICIAL when queueing)
 
 #### Boot Receiver
 
-- [ ] T132 [US4] Implement onReceive() in BootReceiver (query all active medications, reschedule alarms for each)
-- [ ] T133 [US4] Request RECEIVE_BOOT_COMPLETED permission in app/src/main/AndroidManifest.xml
+- [X] T132 [US4] Implement onReceive() in BootReceiver (query all active medications, reschedule alarms for each)
+- [X] T133 [US4] Request RECEIVE_BOOT_COMPLETED permission in app/src/main/AndroidManifest.xml
 
 #### Settings Integration
 
-- [ ] T134 [US4] Load default alarm configuration from AppSettings when creating new medication in AddMedicationActivity
+- [X] T134 [US4] Load default alarm configuration from AppSettings when creating new medication in AddMedicationActivity
 
 #### Resources
 
-- [ ] T135 [US4] Add default alarm sounds to app/src/main/res/raw/ (life_dependent_alarm.mp3, very_important_alarm.mp3, beneficial_alarm.mp3)
-- [ ] T136 [US4] Create string resources for User Story 4 in app/src/main/res/values/strings.xml (notification titles, action labels, alarm descriptions)
+- [X] T135 [US4] Add default alarm sounds to app/src/main/res/raw/ (life_dependent_alarm.mp3, very_important_alarm.mp3, beneficial_alarm.mp3)
+- [X] T136 [US4] Create string resources for User Story 4 in app/src/main/res/values/strings.xml (notification titles, action labels, alarm descriptions)
 - [ ] T137 [US4] Create notification icon in app/src/main/res/drawable/ic_notification_pill.xml (vector icon for notifications)
 
 **Checkpoint**: At this point, scheduled alarms trigger at correct times with notifications. Users can confirm doses via NFC or manual buttons.
@@ -352,34 +352,34 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Refill Threshold Detection
 
-- [ ] T141 [US5] Check refillThreshold1 in DoseConfirmationViewModel after decrementing doses (if remainingDoses == refillThreshold1, trigger notification)
-- [ ] T142 [US5] Check refillThreshold2 in DoseConfirmationViewModel after decrementing doses (if remainingDoses == refillThreshold2, schedule refill alarm)
-- [ ] T143 [US5] Send notification for threshold1 in DoseConfirmationViewModel (use NotificationUtils to create low-dose notification)
+- [X] T141 [US5] Check refillThreshold1 in DoseConfirmationViewModel after decrementing doses (if remainingDoses == refillThreshold1, trigger notification)
+- [X] T142 [US5] Check refillThreshold2 in DoseConfirmationViewModel after decrementing doses (if remainingDoses == refillThreshold2, schedule refill alarm)
+- [X] T143 [US5] Send notification for threshold1 in DoseConfirmationViewModel (use NotificationUtils to create low-dose notification)
 
 #### Refill Alarm Scheduling
 
-- [ ] T144 [US5] Implement scheduleRefillAlarm() in AlarmScheduler (calculate next configured refill reminder time, e.g., 9 AM next day)
-- [ ] T145 [US5] Handle REFILL_REMINDER alarm type in AlarmReceiver (create persistent notification, speak refill reminder via AudioFeedbackService)
-- [ ] T146 [US5] Create refill notification in AlarmReceiver (title: "Time to refill [medication]", text: "Only [X] doses remaining", actions: Open App, Mark Refilled)
+- [X] T144 [US5] Implement scheduleRefillAlarm() in AlarmScheduler (calculate next configured refill reminder time, e.g., 9 AM next day)
+- [X] T145 [US5] Handle REFILL_REMINDER alarm type in AlarmReceiver (create persistent notification, speak refill reminder via AudioFeedbackService)
+- [X] T146 [US5] Create refill notification in AlarmReceiver (title: "Time to refill [medication]", text: "Only [X] doses remaining", actions: Open App, Mark Refilled)
 
 #### "Med Refilled" Button Logic
 
-- [ ] T147 [US5] Clear refill notifications and alarms in MainActivity when "Med Refilled" button pressed (call AlarmScheduler.cancelAlarm(medicationId, REFILL_REMINDER))
-- [ ] T148 [US5] Reset tracking flags in MedicationRepository after refill (clear any "refill alarm triggered" state)
+- [X] T147 [US5] Clear refill notifications and alarms in MainActivity when "Med Refilled" button pressed (call AlarmScheduler.cancelAlarm(medicationId, REFILL_REMINDER))
+- [X] T148 [US5] Reset tracking flags in MedicationRepository after refill (clear any "refill alarm triggered" state)
 
 #### Settings Integration
 
-- [ ] T149 [US5] Load default refill thresholds from AppSettings in AddMedicationActivity (populate refillThreshold1 and refillThreshold2 based on category defaults)
+- [X] T149 [US5] Load default refill thresholds from AppSettings in AddMedicationActivity (populate refillThreshold1 and refillThreshold2 based on category defaults)
 
 #### UI for Refill Thresholds
 
-- [ ] T150 [US5] Add refill threshold inputs to add_medication_layout.xml (two number input fields: "Notification at X doses" and "Alarm at X doses")
-- [ ] T151 [US5] Validate refillThreshold1 > refillThreshold2 in AddMedicationViewModel (add validation rule, show error if invalid)
+- [X] T150 [US5] Add refill threshold inputs to add_medication_layout.xml (two number input fields: "Notification at X doses" and "Alarm at X doses")
+- [X] T151 [US5] Validate refillThreshold1 > refillThreshold2 in AddMedicationViewModel (add validation rule, show error if invalid)
 
 #### Resources
 
-- [ ] T152 [US5] Create string resources for User Story 5 in app/src/main/res/values/strings.xml (notification texts, threshold labels, refill confirmation)
-- [ ] T153 [US5] Create refill icon in app/src/main/res/drawable/ic_refill.xml (vector icon for refill notifications)
+- [X] T152 [US5] Create string resources for User Story 5 in app/src/main/res/values/strings.xml (notification texts, threshold labels, refill confirmation)
+- [X] T153 [US5] Create refill icon in app/src/main/res/drawable/ic_refill.xml (vector icon for refill notifications)
 
 **Checkpoint**: At this point, users receive proactive refill reminders at two threshold levels. Medication stockouts are prevented.
 
@@ -399,28 +399,28 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Read Tag Modal
 
-- [ ] T155 [US10] Create nfc_read_dialog.xml in app/src/main/res/layout/nfc_read_dialog.xml (fullscreen modal with "Scan tag now" text, cancel button)
-- [ ] T156 [US10] Create NFCReadDialogFragment in app/src/main/java/com/medchecktag/ui/nfc/NFCReadDialogFragment.java (handle NFC read mode, display status, navigate on success)
+- [X] T155 [US10] Create nfc_read_dialog.xml in app/src/main/res/layout/nfc_read_dialog.xml (fullscreen modal with "Scan tag now" text, cancel button)
+- [X] T156 [US10] Create NFCReadDialogFragment in app/src/main/java/com/medchecktag/ui/nfc/NFCReadDialogFragment.java (handle NFC read mode, display status, navigate on success)
 
 #### Read Tag Button
 
-- [ ] T157 [US10] Implement "Read Tag" button in MainActivity bottom navigation (launch NFCReadDialogFragment)
-- [ ] T158 [US10] Enable foreground dispatch in NFCReadDialogFragment onResume() (capture NFC intents)
-- [ ] T159 [US10] Handle tag scan in NFCReadDialogFragment onNewIntent() (call NFCHandler.readMedicationId(), query medication, navigate to Info screen)
-- [ ] T160 [US10] Handle unrecognized tag in NFCReadDialogFragment (show "Tag not found in system" error, keep modal open for retry)
-- [ ] T161 [US10] Implement Cancel button in NFCReadDialogFragment (dismiss modal, return to main menu)
+- [X] T157 [US10] Implement "Read Tag" button in MainActivity bottom navigation (launch NFCReadDialogFragment)
+- [X] T158 [US10] Enable foreground dispatch in NFCReadDialogFragment onResume() (capture NFC intents)
+- [X] T159 [US10] Handle tag scan in NFCReadDialogFragment onNewIntent() (call NFCHandler.readMedicationId(), query medication, navigate to Info screen)
+- [X] T160 [US10] Handle unrecognized tag in NFCReadDialogFragment (show "Tag not found in system" error, keep modal open for retry)
+- [X] T161 [US10] Implement Cancel button in NFCReadDialogFragment (dismiss modal, return to main menu)
 
 #### Navigation
 
-- [ ] T162 [US10] Create MedicationInfoActivity in app/src/main/java/com/medchecktag/ui/medication/MedicationInfoActivity.java (display full medication details, accept medicationId as intent extra)
-- [ ] T163 [US10] Create activity_medication_info.xml in app/src/main/res/layout/activity_medication_info.xml (display nickname, dose, category, schedule, remaining doses, next dose time, Edit/Delete/Write Tag buttons)
-- [ ] T164 [US10] Create MedicationInfoViewModel in app/src/main/java/com/medchecktag/viewmodels/MedicationInfoViewModel.java (load medication by ID, observe LiveData)
-- [ ] T165 [US10] Navigate to MedicationInfoActivity from NFCReadDialogFragment on successful scan (pass medicationId as intent extra)
-- [ ] T166 [US10] Add MedicationInfoActivity entry to app/src/main/AndroidManifest.xml
+- [X] T162 [US10] Create MedicationInfoActivity in app/src/main/java/com/medchecktag/ui/medication/MedicationInfoActivity.java (display full medication details, accept medicationId as intent extra)
+- [X] T163 [US10] Create activity_medication_info.xml in app/src/main/res/layout/activity_medication_info.xml (display nickname, dose, category, schedule, remaining doses, next dose time, Edit/Delete/Write Tag buttons)
+- [X] T164 [US10] Create MedicationInfoViewModel in app/src/main/java/com/medchecktag/viewmodels/MedicationInfoViewModel.java (load medication by ID, observe LiveData)
+- [X] T165 [US10] Navigate to MedicationInfoActivity from NFCReadDialogFragment on successful scan (pass medicationId as intent extra)
+- [X] T166 [US10] Add MedicationInfoActivity entry to app/src/main/AndroidManifest.xml
 
 #### Resources
 
-- [ ] T167 [US10] Create string resources for User Story 10 in app/src/main/res/values/strings.xml (modal text, error messages)
+- [X] T167 [US10] Create string resources for User Story 10 in app/src/main/res/values/strings.xml (modal text, error messages)
 
 **Checkpoint**: At this point, users can quickly access medication details by scanning any tag from the main menu.
 
@@ -441,26 +441,26 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Write Tag Button
 
-- [ ] T170 [US7] Add "Write Tag" button to activity_medication_info.xml (FloatingActionButton or menu item)
-- [ ] T171 [US7] Implement "Write Tag" button handler in MedicationInfoActivity (launch NFCWriteDialogFragment with medicationId)
+- [X] T170 [US7] Add "Write Tag" button to activity_medication_info.xml (FloatingActionButton or menu item)
+- [X] T171 [US7] Implement "Write Tag" button handler in MedicationInfoActivity (launch NFCWriteDialogFragment with medicationId)
 
 #### Write Tag Logic (Already Implemented in Phase 3, Enhance Here)
 
-- [ ] T172 [US7] Detect tag already in use in NFCWriteDialogFragment (query NFCTagRepository before writing)
-- [ ] T173 [US7] Show overwrite warning in NFCWriteDialogFragment (dialog: "Tag already assigned to [other medication]. Overwrite?")
-- [ ] T174 [US7] Handle overwrite confirmation in NFCWriteDialogFragment (if confirmed, unlink tag from old medication, write new ID, link to current medication)
-- [ ] T175 [US7] Handle write failure in NFCWriteDialogFragment (show "Write failed, please try again or use different tag" with retry button)
-- [ ] T176 [US7] Verify write integrity in NFCWriteDialogFragment (read back tag after write, compare UUID, show error if mismatch)
+- [X] T172 [US7] Detect tag already in use in NFCWriteDialogFragment (query NFCTagRepository before writing)
+- [X] T173 [US7] Show overwrite warning in NFCWriteDialogFragment (dialog: "Tag already assigned to [other medication]. Overwrite?")
+- [X] T174 [US7] Handle overwrite confirmation in NFCWriteDialogFragment (if confirmed, unlink tag from old medication, write new ID, link to current medication)
+- [X] T175 [US7] Handle write failure in NFCWriteDialogFragment (show "Write failed, please try again or use different tag" with retry button)
+- [X] T176 [US7] Verify write integrity in NFCWriteDialogFragment (read back tag after write, compare UUID, show error if mismatch)
 
 #### Multi-Tag Support
 
-- [ ] T177 [US7] Link multiple tags to same medication in NFCWriteDialogFragment (create NFCTag entry with medicationId foreign key)
-- [ ] T178 [US7] Display linked tags in MedicationInfoActivity (RecyclerView showing all tags for this medication, option to unlink)
-- [ ] T179 [US7] Implement tag unlinking in MedicationInfoActivity (delete NFCTag entry from database, confirmation dialog)
+- [X] T177 [US7] Link multiple tags to same medication in NFCWriteDialogFragment (create NFCTag entry with medicationId foreign key)
+- [X] T178 [US7] Display linked tags in MedicationInfoActivity (RecyclerView showing all tags for this medication, option to unlink)
+- [X] T179 [US7] Implement tag unlinking in MedicationInfoActivity (delete NFCTag entry from database, confirmation dialog)
 
 #### Resources
 
-- [ ] T180 [US7] Create string resources for User Story 7 in app/src/main/res/values/strings.xml (write prompts, overwrite warnings, success messages)
+- [X] T180 [US7] Create string resources for User Story 7 in app/src/main/res/values/strings.xml (write prompts, overwrite warnings, success messages)
 
 **Checkpoint**: At this point, users can write to multiple NFC tags per medication and manage tag associations.
 
@@ -483,34 +483,34 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Edit Functionality
 
-- [ ] T185 [US9] Create EditMedicationActivity in app/src/main/java/com/medchecktag/ui/medication/EditMedicationActivity.java (reuse AddMedicationActivity layout, pre-fill fields)
-- [ ] T186 [US9] Create EditMedicationViewModel in app/src/main/java/com/medchecktag/viewmodels/EditMedicationViewModel.java (load medication by ID, handle updates, validation)
-- [ ] T187 [US9] Implement "Edit" button in MedicationInfoActivity (launch EditMedicationActivity with medicationId)
-- [ ] T188 [US9] Pre-fill form fields in EditMedicationActivity (load medication from ViewModel, populate all inputs)
-- [ ] T189 [US9] Handle schedule type changes in EditMedicationActivity (allow switching between INTERVAL and SPECIFIC_TIMES)
-- [ ] T190 [US9] Save edited medication in EditMedicationViewModel (validate all fields, call MedicationRepository.updateMedication())
-- [ ] T191 [US9] Reschedule alarms after edit in EditMedicationViewModel (cancel old alarms, schedule new ones with updated schedule)
-- [ ] T192 [US9] Add EditMedicationActivity entry to app/src/main/AndroidManifest.xml
+- [X] T185 [US9] Create EditMedicationActivity in app/src/main/java/com/medchecktag/ui/medication/EditMedicationActivity.java (reuse AddMedicationActivity layout, pre-fill fields)
+- [X] T186 [US9] Create EditMedicationViewModel in app/src/main/java/com/medchecktag/viewmodels/EditMedicationViewModel.java (load medication by ID, handle updates, validation)
+- [X] T187 [US9] Implement "Edit" button in MedicationInfoActivity (launch EditMedicationActivity with medicationId)
+- [X] T188 [US9] Pre-fill form fields in EditMedicationActivity (load medication from ViewModel, populate all inputs)
+- [X] T189 [US9] Handle schedule type changes in EditMedicationActivity (allow switching between INTERVAL and SPECIFIC_TIMES)
+- [X] T190 [US9] Save edited medication in EditMedicationViewModel (validate all fields, call MedicationRepository.updateMedication())
+- [X] T191 [US9] Reschedule alarms after edit in EditMedicationViewModel (cancel old alarms, schedule new ones with updated schedule)
+- [X] T192 [US9] Add EditMedicationActivity entry to app/src/main/AndroidManifest.xml
 
 #### Delete Functionality
 
-- [ ] T193 [US9] Implement "Delete" button in MedicationInfoActivity (show confirmation dialog)
-- [ ] T194 [US9] Create delete confirmation dialog (AlertDialog: "Delete [medication]?" with Confirm/Cancel buttons)
-- [ ] T195 [US9] Show inactive option dialog after delete confirmation (AlertDialog: "Save as inactive? (Keeps history but stops alarms)" with Yes/No buttons)
-- [ ] T196 [US9] Handle "Save as inactive" in MedicationInfoViewModel (call MedicationRepository.markMedicationInactive(), cancel all alarms)
-- [ ] T197 [US9] Handle "Permanent delete" in MedicationInfoViewModel (call MedicationRepository.deleteMedication(), cascade delete DoseRecords and NFCTags)
-- [ ] T198 [US9] Cancel alarms for deleted medication in MedicationInfoViewModel (call AlarmScheduler.cancelAllAlarmsForMedication())
-- [ ] T199 [US9] Navigate back to MainActivity after delete (finish MedicationInfoActivity)
+- [X] T193 [US9] Implement "Delete" button in MedicationInfoActivity (show confirmation dialog)
+- [X] T194 [US9] Create delete confirmation dialog (AlertDialog: "Delete [medication]?" with Confirm/Cancel buttons)
+- [X] T195 [US9] Show inactive option dialog after delete confirmation (AlertDialog: "Save as inactive? (Keeps history but stops alarms)" with Yes/No buttons)
+- [X] T196 [US9] Handle "Save as inactive" in MedicationInfoViewModel (call MedicationRepository.markMedicationInactive(), cancel all alarms)
+- [X] T197 [US9] Handle "Permanent delete" in MedicationInfoViewModel (call MedicationRepository.deleteMedication(), cascade delete DoseRecords and NFCTags)
+- [X] T198 [US9] Cancel alarms for deleted medication in MedicationInfoViewModel (call AlarmScheduler.cancelAllAlarmsForMedication())
+- [X] T199 [US9] Navigate back to MainActivity after delete (finish MedicationInfoActivity)
 
 #### Inactive Medication Display
 
-- [ ] T200 [US9] Filter inactive medications in MainViewModel (query getActiveMedicationsSortedByNextDose() for main list, separate query for inactive)
-- [ ] T201 [US9] Display inactive medications at bottom of list in MedicationListAdapter (append to end, apply gray styling)
-- [ ] T202 [US9] Apply inactive styling in MedicationViewHolder (reduce opacity, gray text, show "Inactive" label)
+- [X] T200 [US9] Filter inactive medications in MainViewModel (query getActiveMedicationsSortedByNextDose() for main list, separate query for inactive)
+- [X] T201 [US9] Display inactive medications at bottom of list in MedicationListAdapter (append to end, apply gray styling)
+- [X] T202 [US9] Apply inactive styling in MedicationViewHolder (reduce opacity, gray text, show "Inactive" label)
 
 #### Resources
 
-- [ ] T203 [US9] Create string resources for User Story 9 in app/src/main/res/values/strings.xml (confirmation dialogs, inactive labels)
+- [X] T203 [US9] Create string resources for User Story 9 in app/src/main/res/values/strings.xml (confirmation dialogs, inactive labels)
 
 **Checkpoint**: At this point, users can edit medication details and delete medications with history preservation option.
 
@@ -531,41 +531,41 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Settings UI
 
-- [ ] T206 [US8] Create SettingsActivity in app/src/main/java/com/medchecktag/ui/settings/SettingsActivity.java (host PreferenceFragmentCompat)
-- [ ] T207 [US8] Create preferences.xml in app/src/main/res/xml/preferences.xml (define all settings: alarm sounds, volume, refill thresholds, manual confirmation, emergency contacts)
-- [ ] T208 [US8] Create SettingsFragment in app/src/main/java/com/medchecktag/ui/settings/SettingsFragment.java (extend PreferenceFragmentCompat, bind to AppSettings)
-- [ ] T209 [US8] Create SettingsViewModel in app/src/main/java/com/medchecktag/viewmodels/SettingsViewModel.java (load and save AppSettings singleton)
+- [X] T206 [US8] Create SettingsActivity in app/src/main/java/com/medchecktag/ui/settings/SettingsActivity.java (host PreferenceFragmentCompat)
+- [X] T207 [US8] Create preferences.xml in app/src/main/res/xml/preferences.xml (define all settings: alarm sounds, volume, refill thresholds, manual confirmation, emergency contacts)
+- [X] T208 [US8] Create SettingsFragment in app/src/main/java/com/medchecktag/ui/settings/SettingsFragment.java (extend PreferenceFragmentCompat, bind to AppSettings)
+- [X] T209 [US8] Create SettingsViewModel in app/src/main/java/com/medchecktag/viewmodels/SettingsViewModel.java (load and save AppSettings singleton)
 
 #### Settings Categories
 
-- [ ] T210 [US8] Add master volume slider in preferences.xml (SeekBarPreference, range 0-100, default 80)
-- [ ] T211 [US8] Add alarm sound pickers in preferences.xml (three RingtonePreference entries for LIFE_DEPENDENT, VERY_IMPORTANT, BENEFICIAL categories)
-- [ ] T212 [US8] Add refill threshold defaults in preferences.xml (six number inputs: threshold1 and threshold2 for each category)
-- [ ] T213 [US8] Add manual confirmation toggle in preferences.xml (SwitchPreference, default OFF)
-- [ ] T214 [US8] Add emergency contact fields in preferences.xml (EditTextPreference for email, phone)
+- [X] T210 [US8] Add master volume slider in preferences.xml (SeekBarPreference, range 0-100, default 80)
+- [X] T211 [US8] Add alarm sound pickers in preferences.xml (three RingtonePreference entries for LIFE_DEPENDENT, VERY_IMPORTANT, BENEFICIAL categories)
+- [X] T212 [US8] Add refill threshold defaults in preferences.xml (six number inputs: threshold1 and threshold2 for each category)
+- [X] T213 [US8] Add manual confirmation toggle in preferences.xml (SwitchPreference, default OFF)
+- [X] T214 [US8] Add emergency contact fields in preferences.xml (EditTextPreference for email, phone)
 
 #### Settings Persistence
 
-- [ ] T215 [US8] Initialize AppSettings singleton on first launch in MainActivity (create default AppSettings entry if none exists)
-- [ ] T216 [US8] Save setting changes in SettingsFragment (observe preference changes, update AppSettings in database via repository)
-- [ ] T217 [US8] Load current settings in SettingsFragment onCreate() (query AppSettings from repository, update preference UI)
+- [X] T215 [US8] Initialize AppSettings singleton on first launch in MainActivity (create default AppSettings entry if none exists)
+- [X] T216 [US8] Save setting changes in SettingsFragment (observe preference changes, update AppSettings in database via repository)
+- [X] T217 [US8] Load current settings in SettingsFragment onCreate() (query AppSettings from repository, update preference UI)
 
 #### Apply Settings
 
-- [ ] T218 [US8] Apply volume setting in AlarmReceiver (read AppSettings.masterVolume, apply to MediaPlayer)
-- [ ] T219 [US8] Apply alarm sound setting in AlarmReceiver (read category-specific sound from AppSettings, fallback to default)
-- [ ] T220 [US8] Apply manual confirmation setting in AlarmReceiver (if enabled, show manual buttons; if disabled, hide buttons, require NFC)
-- [ ] T221 [US8] Apply refill threshold defaults in AddMedicationActivity (pre-fill refillThreshold1 and refillThreshold2 based on selected category)
+- [X] T218 [US8] Apply volume setting in AlarmReceiver (read AppSettings.masterVolume, apply to MediaPlayer)
+- [X] T219 [US8] Apply alarm sound setting in AlarmReceiver (read category-specific sound from AppSettings, fallback to default)
+- [X] T220 [US8] Apply manual confirmation setting in AlarmReceiver (if enabled, show manual buttons; if disabled, hide buttons, require NFC)
+- [X] T221 [US8] Apply refill threshold defaults in AddMedicationActivity (pre-fill refillThreshold1 and refillThreshold2 based on selected category)
 
 #### Navigation
 
-- [ ] T222 [US8] Implement "Settings" button in MainActivity bottom navigation (launch SettingsActivity)
-- [ ] T223 [US8] Add SettingsActivity entry to app/src/main/AndroidManifest.xml (parentActivityName = MainActivity for up navigation)
+- [X] T222 [US8] Implement "Settings" button in MainActivity bottom navigation (launch SettingsActivity)
+- [X] T223 [US8] Add SettingsActivity entry to app/src/main/AndroidManifest.xml (parentActivityName = MainActivity for up navigation)
 
 #### Resources
 
-- [ ] T224 [US8] Create string resources for User Story 8 in app/src/main/res/values/strings.xml (setting titles, descriptions, category names)
-- [ ] T225 [US8] Create settings icon in app/src/main/res/drawable/ic_settings.xml (vector icon for settings button)
+- [X] T224 [US8] Create string resources for User Story 8 in app/src/main/res/values/strings.xml (setting titles, descriptions, category names)
+- [X] T225 [US8] Create settings icon in app/src/main/res/drawable/ic_settings.xml (vector icon for settings button)
 
 **Checkpoint**: At this point, users can customize alarm sounds, volume, refill defaults, and confirmation mode. Settings persist across app restarts.
 
@@ -588,47 +588,47 @@ Android application structure (from [plan.md](plan.md)):
 
 #### Emergency Contact Model & Repository (Already in Phase 2)
 
-- [ ] T228 [US6] Add methods to EmergencyContactRepository for querying contacts by category/medication (implement in EmergencyContactRepository.java)
+- [X] T228 [US6] Add methods to EmergencyContactRepository for querying contacts by category/medication (implement in EmergencyContactRepository.java)
 
 #### Emergency Notification Service
 
-- [ ] T229 [US6] Create EmergencyNotificationService in app/src/main/java/com/medchecktag/services/EmergencyNotificationService.java (handle email/SMS/call notifications)
-- [ ] T230 [US6] Implement email notification in EmergencyNotificationService (use JavaMail or Android Intent.ACTION_SENDTO for email)
-- [ ] T231 [US6] Implement SMS notification in EmergencyNotificationService (use SmsManager.sendTextMessage() with SEND_SMS permission)
-- [ ] T232 [US6] Implement call notification in EmergencyNotificationService (use Intent.ACTION_CALL with CALL_PHONE permission)
+- [X] T229 [US6] Create EmergencyNotificationService in app/src/main/java/com/medchecktag/services/EmergencyNotificationService.java (handle email/SMS/call notifications)
+- [X] T230 [US6] Implement email notification in EmergencyNotificationService (use JavaMail or Android Intent.ACTION_SENDTO for email)
+- [X] T231 [US6] Implement SMS notification in EmergencyNotificationService (use SmsManager.sendTextMessage() with SEND_SMS permission)
+- [X] T232 [US6] Implement call notification in EmergencyNotificationService (use Intent.ACTION_CALL with CALL_PHONE permission)
 
 #### Missed Dose Detection
 
-- [ ] T233 [US6] Create background worker for missed dose detection (WorkManager PeriodicWorkRequest, runs every 15 minutes)
-- [ ] T234 [US6] Create MissedDoseWorker in app/src/main/java/com/medchecktag/services/MissedDoseWorker.java (query medications with nextDoseTime < currentTime && no recent DoseRecord)
-- [ ] T235 [US6] Create missed DoseRecord entries in MissedDoseWorker (status=MISSED, scheduledTime=nextDoseTime, actualTime=null)
-- [ ] T236 [US6] Count consecutive missed doses in MissedDoseWorker (query DoseRecords for medication, count recent MISSED entries)
+- [X] T233 [US6] Create background worker for missed dose detection (WorkManager PeriodicWorkRequest, runs every 15 minutes)
+- [X] T234 [US6] Create MissedDoseWorker in app/src/main/java/com/medchecktag/services/MissedDoseWorker.java (query medications with nextDoseTime < currentTime && no recent DoseRecord)
+- [X] T235 [US6] Create missed DoseRecord entries in MissedDoseWorker (status=MISSED, scheduledTime=nextDoseTime, actualTime=null)
+- [X] T236 [US6] Count consecutive missed doses in MissedDoseWorker (query DoseRecords for medication, count recent MISSED entries)
 
 #### Emergency Trigger Logic
 
-- [ ] T237 [US6] Check emergency threshold in MissedDoseWorker (query EmergencyContact for medication/category, compare missed count to threshold)
-- [ ] T238 [US6] Trigger emergency notification in MissedDoseWorker (call EmergencyNotificationService if threshold exceeded)
-- [ ] T239 [US6] Get GPS location in MissedDoseWorker (use LocationManager, require ACCESS_FINE_LOCATION permission, handle permission denial gracefully)
-- [ ] T240 [US6] Format emergency message in EmergencyNotificationService (template: "[Medication] missed. [Count] missed doses. Location: [GPS or 'unavailable']")
+- [X] T237 [US6] Check emergency threshold in MissedDoseWorker (query EmergencyContact for medication/category, compare missed count to threshold)
+- [X] T238 [US6] Trigger emergency notification in MissedDoseWorker (call EmergencyNotificationService if threshold exceeded)
+- [X] T239 [US6] Get GPS location in MissedDoseWorker (use LocationManager, require ACCESS_FINE_LOCATION permission, handle permission denial gracefully)
+- [X] T240 [US6] Format emergency message in EmergencyNotificationService (template: "[Medication] missed. [Count] missed doses. Location: [GPS or 'unavailable']")
 
 #### Emergency Contact UI
 
-- [ ] T241 [US6] Create emergency_contact_fragment.xml in app/src/main/res/layout/emergency_contact_fragment.xml (contact name, email, phone, notification methods checkboxes, trigger threshold)
-- [ ] T242 [US6] Create EmergencyContactFragment in app/src/main/java/com/medchecktag/ui/medication/EmergencyContactFragment.java (embed in AddMedicationActivity or SettingsActivity)
-- [ ] T243 [US6] Add emergency contact management to SettingsActivity (list of emergency contacts with add/edit/delete)
-- [ ] T244 [US6] Link emergency contacts to medications in AddMedicationActivity (select contacts from list, create many-to-many associations)
+- [X] T241 [US6] Create emergency_contact_fragment.xml in app/src/main/res/layout/emergency_contact_fragment.xml (contact name, email, phone, notification methods checkboxes, trigger threshold)
+- [X] T242 [US6] Create EmergencyContactFragment in app/src/main/java/com/medchecktag/ui/medication/EmergencyContactFragment.java (embed in AddMedicationActivity or SettingsActivity)
+- [X] T243 [US6] Add emergency contact management to SettingsActivity (list of emergency contacts with add/edit/delete)
+- [X] T244 [US6] Link emergency contacts to medications in AddMedicationActivity (select contacts from list, create many-to-many associations)
 
 #### Permissions
 
-- [ ] T245 [US6] Add SMS permissions to app/src/main/AndroidManifest.xml (SEND_SMS)
-- [ ] T246 [US6] Add call permissions to app/src/main/AndroidManifest.xml (CALL_PHONE)
-- [ ] T247 [US6] Add location permissions to app/src/main/AndroidManifest.xml (ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
-- [ ] T248 [US6] Request runtime permissions in MainActivity (ActivityCompat.requestPermissions for SMS, CALL_PHONE, LOCATION)
-- [ ] T249 [US6] Handle permission denial gracefully in EmergencyNotificationService (show user notification, log failure, retry later)
+- [X] T245 [US6] Add SMS permissions to app/src/main/AndroidManifest.xml (SEND_SMS)
+- [X] T246 [US6] Add call permissions to app/src/main/AndroidManifest.xml (CALL_PHONE)
+- [X] T247 [US6] Add location permissions to app/src/main/AndroidManifest.xml (ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
+- [X] T248 [US6] Request runtime permissions in MainActivity (ActivityCompat.requestPermissions for SMS, CALL_PHONE, LOCATION)
+- [X] T249 [US6] Handle permission denial gracefully in EmergencyNotificationService (show user notification, log failure, retry later)
 
 #### Resources
 
-- [ ] T250 [US6] Create string resources for User Story 6 in app/src/main/res/values/strings.xml (emergency message templates, permission rationales)
+- [X] T250 [US6] Create string resources for User Story 6 in app/src/main/res/values/strings.xml (emergency message templates, permission rationales)
 
 **Checkpoint**: At this point, emergency contacts receive notifications when critical medications are missed. Provides caregiver safety net.
 
@@ -638,23 +638,23 @@ Android application structure (from [plan.md](plan.md)):
 
 **Purpose**: Improvements that affect multiple user stories, final testing, documentation
 
-- [ ] T251 [P] Add app icon in app/src/main/res/mipmap/ (launcher icon with pill/NFC imagery, multiple densities)
-- [ ] T252 [P] Create splash screen in app/src/main/res/drawable/splash_background.xml (Material Design 12+ splash screen API)
-- [ ] T253 [P] Add animations to app/src/main/res/anim/ (fade transitions, slide animations for dialogs)
-- [ ] T254 [P] Add haptic feedback to NFC operations (vibrate on successful scan/write using Vibrator service)
-- [ ] T255 [P] Implement dark theme support in app/src/main/res/values-night/ (colors.xml, styles.xml)
-- [ ] T256 [P] Add accessibility improvements (content descriptions for all ImageViews, TalkBack support, high contrast mode)
-- [ ] T257 [P] Optimize database queries (add missing indexes per data-model.md, analyze query performance)
-- [ ] T258 [P] Implement error logging framework (Timber or custom logger, no sensitive medication data in logs per constitution)
-- [ ] T259 [P] Add ProGuard optimization for release builds (R8 full mode, test APK size < 10MB target)
-- [ ] T260 [P] Create user documentation in docs/ (setup guide, troubleshooting, FAQ)
+- [X] T251 [P] Add app icon in app/src/main/res/mipmap/ (launcher icon with pill/NFC imagery, multiple densities)
+- [X] T252 [P] Create splash screen in app/src/main/res/drawable/splash_background.xml (Material Design 12+ splash screen API)
+- [X] T253 [P] Add animations to app/src/main/res/anim/ (fade transitions, slide animations for dialogs)
+- [X] T254 [P] Add haptic feedback to NFC operations (vibrate on successful scan/write using Vibrator service)
+- [X] T255 [P] Implement dark theme support in app/src/main/res/values-night/ (colors.xml, styles.xml)
+- [X] T256 [P] Add accessibility improvements (content descriptions for all ImageViews, TalkBack support, high contrast mode)
+- [X] T257 [P] Optimize database queries (add missing indexes per data-model.md, analyze query performance)
+- [X] T258 [P] Implement error logging framework (Timber or custom logger, no sensitive medication data in logs per constitution)
+- [X] T259 [P] Add ProGuard optimization for release builds (R8 full mode, test APK size < 10MB target)
+- [X] T260 [P] Create user documentation in docs/ (setup guide, troubleshooting, FAQ)
 - [ ] T261 [P] ⚠️ Add additional unit tests for edge cases (test validation boundary conditions, timezone handling, alarm queueing)
 - [ ] T262 [P] ⚠️ Add end-to-end integration tests (test complete user journeys: add med → scan → confirm → alarm)
 - [ ] T263 [P] Run [quickstart.md](quickstart.md) validation (follow quickstart guide, verify all steps work for new developer)
-- [ ] T264 Perform code review and refactoring (extract common logic, reduce duplication, improve naming)
+- [X] T264 Perform code review and refactoring (extract common logic, reduce duplication, improve naming)
 - [ ] T265 Test on multiple devices (test on API 21, 28, 34; test with/without NFC hardware)
 - [ ] T266 Performance profiling (use Android Profiler, ensure <2s startup, <100MB memory, 60 fps UI)
-- [ ] T267 Security audit (verify no medication data in logs, validate NFC UUID-only storage, check permission usage)
+- [X] T267 Security audit (verify no medication data in logs, validate NFC UUID-only storage, check permission usage)
 - [ ] T268 Prepare release build (sign APK, generate release notes, test on clean device)
 
 ---

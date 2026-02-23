@@ -9,8 +9,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.medchecktag.R;
 
 /**
- * Settings activity.
- * Placeholder - full implementation in Phase 9.
+ * Settings activity hosting PreferenceFragmentCompat.
+ * T206: Full implementation with SettingsFragment.
  */
 public class SettingsActivity extends AppCompatActivity {
     
@@ -24,7 +24,15 @@ public class SettingsActivity extends AppCompatActivity {
         
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Settings");
+            getSupportActionBar().setTitle(R.string.settings);
+        }
+
+        // T206: Host SettingsFragment
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings_container, new SettingsFragment())
+                .commit();
         }
     }
     

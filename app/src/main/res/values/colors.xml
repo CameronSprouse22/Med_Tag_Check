@@ -32,7 +32,14 @@
     <color name="overdue_background">#FFFFEBEE</color>
     <color name="inactive_background">#FFF5F5F5</color>
     
+    <!-- Warning colors -->
+    <color name="warning_amber">#FFFFA000</color>
+    
+    <!-- Divider -->
+    <color name="divider">#FFE0E0E0</color>
+    
     <!-- Theme colors -->
+    <color name="primary">#FF6200EE</color>
     <color name="colorPrimary">#FF6200EE</color>
     <color name="colorAccent">#FF03DAC5</color>
 

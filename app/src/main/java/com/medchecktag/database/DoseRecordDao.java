@@ -65,6 +65,9 @@ public interface DoseRecordDao {
     @Query("SELECT COUNT(*) FROM dose_records WHERE medicationId = :medicationId AND status = 'MISSED'")
     int getMissedDoseCountSync(String medicationId);
     
+    @Query("SELECT * FROM dose_records WHERE medicationId = :medicationId ORDER BY scheduledTime DESC LIMIT :limit")
+    List<DoseRecord> getRecentByMedicationIdSync(String medicationId, int limit);
+    
     @Query("DELETE FROM dose_records WHERE medicationId = :medicationId")
     void deleteByMedicationId(String medicationId);
 }

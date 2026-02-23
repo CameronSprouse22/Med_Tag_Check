@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.medchecktag.R;
 import com.medchecktag.models.MedicationCategory;
 
 /**
@@ -250,5 +252,27 @@ public class NotificationUtils {
     public static int getNotificationIdForMedication(String medicationId, boolean isRefill) {
         int base = isRefill ? NOTIFICATION_ID_REFILL_BASE : NOTIFICATION_ID_DOSE_BASE;
         return base + Math.abs(medicationId.hashCode() % 1000);
+    }
+
+    /**
+     * T143: Send a one-off refill warning notification when remainingDoses <= refillThreshold1.
+     */
+    public static void sendRefillWarningNotification(Context context, String nickname, int remainingDoses) {
+        createNotificationChannels(context);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID_REFILL_WARNING)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle(context.getString(R.string.refill_warning_title, nickname))
+                .setContentText(context.getString(R.string.refill_warning_message, nickname, remainingDoses))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat nm = NotificationManagerCompat.from(context);
+        int id = NOTIFICATION_ID_REFILL_BASE + Math.abs(nickname.hashCode() % 1000);
+        try {
+            nm.notify(id, builder.build());
+        } catch (SecurityException ignored) {
+            // POST_NOTIFICATIONS permission not granted
+        }
     }
 }

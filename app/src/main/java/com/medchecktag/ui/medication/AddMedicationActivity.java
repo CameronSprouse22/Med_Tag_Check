@@ -1,6 +1,7 @@
 package com.medchecktag.ui.medication;
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.medchecktag.R;
+import com.medchecktag.alarms.AlarmScheduler;
 import com.medchecktag.models.MedicationCategory;
 import com.medchecktag.models.ScheduleType;
 import com.medchecktag.ui.nfc.NFCWriteDialogFragment;
@@ -53,6 +56,8 @@ public class AddMedicationActivity extends AppCompatActivity {
     
     private ScheduleIntervalFragment intervalFragment;
     private ScheduleSpecificTimesFragment specificTimesFragment;
+    private AlarmConfigurationFragment alarmConfigFragment;
+    private AlarmScheduler alarmScheduler;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class AddMedicationActivity extends AppCompatActivity {
         
         // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(AddMedicationViewModel.class);
+        alarmScheduler = new AlarmScheduler(this);
         
         // Initialize UI elements
         initializeViews();
@@ -79,6 +85,9 @@ public class AddMedicationActivity extends AppCompatActivity {
         
         // Load initial schedule fragment
         loadScheduleFragment(ScheduleType.INTERVAL);
+
+        // T116: Load alarm configuration fragment
+        loadAlarmConfigFragment();
     }
     
     private void initializeViews() {
@@ -116,6 +125,8 @@ public class AddMedicationActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.setCategory(categories[position]);
+                // T221: Apply refill threshold defaults from settings
+                applyRefillThresholdDefaults(categories[position]);
             }
             
             @Override
@@ -126,6 +137,39 @@ public class AddMedicationActivity extends AppCompatActivity {
         
         // Set default to BENEFICIAL (index 2)
         spinnerCategory.setSelection(2);
+    }
+
+    /**
+     * T221: Pre-fill refill thresholds based on category from settings.
+     */
+    private void applyRefillThresholdDefaults(MedicationCategory category) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String categoryKey;
+        int defaultT1, defaultT2;
+
+        switch (category) {
+            case LIFE_DEPENDENT:
+                categoryKey = "life_dependent";
+                defaultT1 = 14;
+                defaultT2 = 7;
+                break;
+            case VERY_IMPORTANT:
+                categoryKey = "very_important";
+                defaultT1 = 10;
+                defaultT2 = 5;
+                break;
+            default:
+                categoryKey = "beneficial";
+                defaultT1 = 7;
+                defaultT2 = 3;
+                break;
+        }
+
+        String t1 = prefs.getString("refill_threshold1_" + categoryKey, String.valueOf(defaultT1));
+        String t2 = prefs.getString("refill_threshold2_" + categoryKey, String.valueOf(defaultT2));
+
+        if (inputRefillThreshold1 != null) inputRefillThreshold1.setText(t1);
+        if (inputRefillThreshold2 != null) inputRefillThreshold2.setText(t2);
     }
     
     private String formatCategoryName(MedicationCategory category) {
@@ -173,6 +217,18 @@ public class AddMedicationActivity extends AppCompatActivity {
         transaction.commit();
     }
     
+    /**
+     * T116: Load AlarmConfigurationFragment into the alarm fragment container.
+     */
+    private void loadAlarmConfigFragment() {
+        if (alarmConfigFragment == null) {
+            alarmConfigFragment = new AlarmConfigurationFragment();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.alarm_fragment_container, alarmConfigFragment)
+                .commit();
+    }
+
     private void setupButtons() {
         buttonCancel.setOnClickListener(v -> finish());
         
@@ -238,7 +294,10 @@ public class AddMedicationActivity extends AppCompatActivity {
                 if (result.success) {
                     // Show success message
                     Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show();
-                    
+
+                    // T120: Schedule alarms for newly created medication
+                    viewModel.scheduleAlarms(alarmScheduler);
+
                     // Launch NFC write dialog
                     showNFCWriteDialog(result.medicationId);
                 } else {

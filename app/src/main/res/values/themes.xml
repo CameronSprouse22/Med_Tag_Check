@@ -14,4 +14,10 @@
         <!-- Status bar color -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
+
+    <!-- T252: Splash screen theme -->
+    <style name="Theme.MedCheckTag.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/purple_500</item>
+    </style>
 </resources>

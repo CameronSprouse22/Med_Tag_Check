@@ -3,13 +3,19 @@ package com.medchecktag.models;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 /**
  * EmergencyContact entity representing a contact to notify when critical medication is missed.
  * Per data-model.md Section 4: EmergencyContact
  */
-@Entity(tableName = "emergency_contacts")
+@Entity(
+    tableName = "emergency_contacts",
+    indices = {
+        @Index(value = "isActive")
+    }
+)
 public class EmergencyContact {
     @PrimaryKey
     @NonNull

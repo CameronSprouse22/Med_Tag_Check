@@ -5,16 +5,41 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
     <group
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:translateX="27"
-        android:translateY="27">
-        <!-- Simple medication pill icon -->
+        android:scaleX="0.45"
+        android:scaleY="0.45"
+        android:translateX="29.7"
+        android:translateY="29.7">
+        <!-- Pill capsule body -->
         <path
             android:fillColor="#FFFFFF"
-            android:pathData="M54,20C35.2,20 20,35.2 20,54C20,72.8 35.2,88 54,88C72.8,88 88,72.8 88,54C88,35.2 72.8,20 54,20ZM54,80C39.6,80 28,68.4 28,54C28,39.6 39.6,28 54,28C68.4,28 80,39.6 80,54C80,68.4 68.4,80 54,80Z" />
+            android:pathData="M54,18C40.7,18 30,28.7 30,42L30,66C30,79.3 40.7,90 54,90C67.3,90 78,79.3 78,66L78,42C78,28.7 67.3,18 54,18ZM70,66C70,74.8 62.8,82 54,82C45.2,82 38,74.8 38,66L38,54L70,54L70,66Z" />
+        <!-- Divider line -->
+        <path
+            android:fillColor="#BBDEFB"
+            android:pathData="M38,54L70,54L70,42C70,33.2 62.8,26 54,26C45.2,26 38,33.2 38,42L38,54Z"
+            android:fillAlpha="0.7" />
+        <!-- NFC signal arcs -->
         <path
             android:fillColor="#FFFFFF"
-            android:pathData="M35,51L73,51L73,57L35,57Z" />
+            android:pathData="M82,38C82,38 86,42 86,54C86,66 82,70 82,70"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3"
+            android:fillAlpha="0" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M88,32C88,32 94,40 94,54C94,68 88,76 88,76"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2.5"
+            android:fillAlpha="0"
+            android:strokeAlpha="0.6" />
+        <!-- Check mark -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M46,64L52,70L62,58"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="3.5"
+            android:fillAlpha="0"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
     </group>
 </vector>

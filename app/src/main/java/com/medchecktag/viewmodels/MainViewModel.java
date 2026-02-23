@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.medchecktag.alarms.AlarmScheduler;
+import com.medchecktag.models.AlarmType;
 import com.medchecktag.models.Medication;
 import com.medchecktag.repositories.MedicationRepository;
 
@@ -19,13 +21,17 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
     
     private final MedicationRepository medicationRepository;
+    private final AlarmScheduler alarmScheduler;
     private final LiveData<List<Medication>> activeMedications;
+    private final LiveData<List<Medication>> allMedications;
     private final MutableLiveData<RefillResult> refillResult = new MutableLiveData<>();
     
     public MainViewModel(@NonNull Application application) {
         super(application);
         this.medicationRepository = new MedicationRepository(application);
+        this.alarmScheduler = new AlarmScheduler(application);
         this.activeMedications = medicationRepository.getActiveMedications();
+        this.allMedications = medicationRepository.getAllMedications();
     }
     
     /**
@@ -34,6 +40,14 @@ public class MainViewModel extends AndroidViewModel {
      */
     public LiveData<List<Medication>> getActiveMedications() {
         return activeMedications;
+    }
+    
+    /**
+     * Get all medications (active first, then inactive) for full list display.
+     * Used when showing inactive medications at the bottom of the list.
+     */
+    public LiveData<List<Medication>> getAllMedications() {
+        return allMedications;
     }
     
     /**
@@ -61,6 +75,9 @@ public class MainViewModel extends AndroidViewModel {
             new MedicationRepository.OnResultCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer result) {
+                    // T147: Cancel refill alarms and notifications
+                    alarmScheduler.cancelAlarm(medication.id, AlarmType.REFILL_REMINDER);
+
                     refillResult.postValue(new RefillResult(
                         true, 
                         "Medication refilled successfully"

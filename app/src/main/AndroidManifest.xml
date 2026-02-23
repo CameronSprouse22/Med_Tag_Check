@@ -24,15 +24,15 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- Future emergency contact features (Phase 12 - User Story 6) -->
-    <!-- SMS permission - not required for MVP, uncomment when implementing US6 -->
-    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
+    <!-- T245: SMS permission for emergency notifications -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
     
-    <!-- Call permission - not required for MVP, uncomment when implementing US6 -->
-    <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
+    <!-- T246: Call permission for emergency calls -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     
-    <!-- Location for emergency notifications - not required for MVP, uncomment when implementing US6 -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+    <!-- T247: Location for emergency notifications -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -52,10 +52,22 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- T091: NFC intent filters for tag discovery -->
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -72,6 +84,20 @@
             android:exported="false"
             android:label="Add Medication"
             android:parentActivityName=".ui.main.MainActivity" />
+
+        <!-- Medication Info Activity (T166 - Phase 8, User Story 10) -->
+        <activity
+            android:name=".ui.medication.MedicationInfoActivity"
+            android:exported="false"
+            android:label="Medication Details"
+            android:parentActivityName=".ui.main.MainActivity" />
+
+        <!-- Edit Medication Activity (T192 - Phase 10, User Story 9) -->
+        <activity
+            android:name=".ui.medication.EditMedicationActivity"
+            android:exported="false"
+            android:label="Edit Medication"
+            android:parentActivityName=".ui.medication.MedicationInfoActivity" />
 
         <!-- Alarm Receiver (T037, T039) -->
         <receiver

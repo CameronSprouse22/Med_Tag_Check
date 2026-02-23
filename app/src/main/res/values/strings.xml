@@ -138,5 +138,173 @@
     
     <string name="refill_success">Medication refilled successfully</string>
     <string name="refill_failed">Failed to update medication</string>
+
+    <!-- User Story 1: NFC Scan & Dose Confirmation (T109) -->
+    <string name="nfc_scan_success_icon_desc">Scan successful</string>
+    <string name="nfc_scan_processing">Reading tag…</string>
+    <string name="nfc_scan_success">Dose confirmed!</string>
+    <string name="nfc_tag_not_linked">This tag is not linked to any medication</string>
+    <string name="nfc_medication_not_found">Medication not found for this tag</string>
+    <string name="nfc_medication_inactive">%s is currently inactive</string>
+    <string name="nfc_dose_already_confirmed">Dose already confirmed less than a minute ago</string>
+    <string name="nfc_scan_error">Error reading tag. Please try again.</string>
+    <string name="nfc_scan_retry">Scan failed. Please hold phone steady and try again.</string>
+    <string name="nfc_foreground_dispatch_failed">Could not enable NFC scanning</string>
+
+    <string name="nfc_early_dose_warning">Note: Next dose is not due for %d more minutes</string>
+    <string name="nfc_refill_warning">Refill reminder: Running low on doses</string>
+    <string name="nfc_refill_critical">URGENT: Very few doses remaining — refill now!</string>
+
+    <string name="nfc_next_dose_now">Next dose: Now</string>
+    <string name="nfc_next_dose_minutes">Next dose in %d minutes</string>
+    <string name="nfc_next_dose_hours">Next dose in %d hours</string>
+    <string name="nfc_next_dose_hours_minutes" formatted="false">Next dose in %dh %dm</string>
+
+    <string name="nfc_audio_confirm_template">Confirmed %1$s, %2$s. Next dose in %3$d minutes.</string>
+    <string name="nfc_audio_refill_template">Reminder: %1$s is running low. %2$d doses remaining.</string>
+
+    <!-- User Story 4: Scheduled Alarms & Notifications (T136) -->
+    <string name="alarm_action_confirm">Confirm Taken</string>
+    <string name="alarm_action_skip">Skip Dose</string>
+
+    <string name="alarm_pre_dose_title">Upcoming: %s</string>
+    <string name="alarm_on_time_title">Time for: %s</string>
+    <string name="alarm_post_dose_title">Overdue: %s</string>
+    <string name="alarm_refill_title">Refill: %s</string>
+
+    <string name="alarm_pre_dose_message">Get ready to take %1$s (%2$s) soon.</string>
+    <string name="alarm_on_time_message">Take %s now. Scan NFC tag or confirm.</string>
+    <string name="alarm_post_dose_message">You haven\'t taken %1$s (%2$s). Please take it now.</string>
+    <string name="alarm_refill_message">%1$s is running low: %2$d doses remaining.</string>
+
+    <string name="alarm_channel_pre_dose">Pre-Dose Reminders</string>
+    <string name="alarm_channel_on_time">Dose Reminders</string>
+    <string name="alarm_channel_post_dose">Overdue Reminders</string>
+    <string name="alarm_channel_refill">Refill Reminders</string>
+
+    <string name="alarm_config_title">Alarm Configuration</string>
+    <string name="alarm_config_pre_dose">Pre-dose alarm</string>
+    <string name="alarm_config_on_time">On-time alarm</string>
+    <string name="alarm_config_post_dose">Post-dose alarm</string>
+    <string name="alarm_config_minutes_before">Minutes before dose</string>
+    <string name="alarm_config_minutes_after">Minutes after dose</string>
+
+    <string name="alarm_pre_dose_label">Pre-dose reminder</string>
+    <string name="alarm_on_time_label">On-time alarm</string>
+    <string name="alarm_post_dose_label">Post-dose reminder</string>
+    <string name="alarm_minutes_hint">Minutes</string>
+    <string name="alarm_settings_description">Configure when to receive alarm notifications relative to your scheduled dose time.</string>
+
+    <!-- User Story 5: Refill Reminders (T152) -->
+    <string name="refill_warning_title">Low supply: %s</string>
+    <string name="refill_warning_message">%1$s is running low — %2$d doses remaining. Time to refill.</string>
+    <string name="refill_critical_title">Urgent refill: %s</string>
+    <string name="refill_critical_message">%1$s is critically low — only %2$d doses left!</string>
+    <string name="refill_label_threshold1">Notification at X doses *</string>
+    <string name="refill_label_threshold2">Alarm at X doses *</string>
+    <string name="refill_mark_refilled">Mark Refilled</string>
+
+    <!-- User Story 10: Read Tag Quick Access (T167) -->
+    <string name="read_tag_icon_desc">NFC scan icon</string>
+    <string name="read_tag_scan_prompt">Scan Tag Now</string>
+    <string name="read_tag_instruction">Hold your phone near a medication NFC tag</string>
+    <string name="read_tag_not_recognized">Tag not recognized</string>
+    <string name="read_tag_not_found">Tag not found in system. Please try again.</string>
+    <string name="read_tag_error">Error reading tag: %s</string>
+
+    <!-- Medication Info Screen -->
+    <string name="info_section_dose">Dose Details</string>
+    <string name="info_section_schedule">Schedule</string>
+    <string name="info_section_notes">Notes</string>
+    <string name="info_dose_label">Dose: %s</string>
+    <string name="info_next_dose_label">Next dose: %s</string>
+    <string name="info_interval_detail">Every %d hours</string>
+
+    <!-- User Story 7: Write to NFC Tag (T180) -->
+    <string name="nfc_overwrite_title">Tag Already In Use</string>
+    <string name="nfc_overwrite_message">This tag is assigned to another medication. Overwrite it?</string>
+    <string name="nfc_write_retry">Write failed. Please try again or use a different tag.</string>
+
+    <!-- User Story 9: Edit & Delete Medications (T203) -->
+    <string name="edit_medication_title">Edit Medication</string>
+    <string name="delete_confirm_title">Delete Medication</string>
+    <string name="delete_confirm_message">Are you sure you want to delete this medication? This action cannot be undone.</string>
+    <string name="delete_inactive_title">Choose Delete Option</string>
+    <string name="delete_inactive_message">Would you like to save this medication as inactive (preserving history) or permanently delete it?</string>
+    <string name="delete_save_inactive">Save as Inactive</string>
+    <string name="delete_permanent">Delete Permanently</string>
+    <string name="delete_marked_inactive">Medication marked as inactive</string>
+
+    <!-- User Story 8: Settings & Customization (T224) -->
+    <string name="pref_category_audio">Audio &amp; Notifications</string>
+    <string name="pref_master_volume">Master Volume</string>
+    <string name="pref_master_volume_summary">Alarm notification volume</string>
+    <string name="pref_alarm_sound_life_dependent">Life-Dependent Alarm Sound</string>
+    <string name="pref_alarm_sound_life_dependent_summary">Sound for life-dependent medication alarms</string>
+    <string name="pref_alarm_sound_very_important">Very Important Alarm Sound</string>
+    <string name="pref_alarm_sound_very_important_summary">Sound for very important medication alarms</string>
+    <string name="pref_alarm_sound_beneficial">Beneficial Alarm Sound</string>
+    <string name="pref_alarm_sound_beneficial_summary">Sound for beneficial medication alarms</string>
+    <string name="pref_audio_feedback">Audio Feedback</string>
+    <string name="pref_audio_feedback_summary">Enable text-to-speech for dose confirmations</string>
+    <string name="pref_haptic_feedback">Haptic Feedback</string>
+    <string name="pref_haptic_feedback_summary">Vibrate on NFC scan and confirmations</string>
+
+    <string name="pref_category_dose">Dose Management</string>
+    <string name="pref_manual_confirmation">Manual Confirmation</string>
+    <string name="pref_manual_confirmation_summary">Allow confirming doses from notification without NFC scan</string>
+    <string name="pref_auto_missed_dose">Auto Missed Dose Detection</string>
+    <string name="pref_auto_missed_dose_summary">Automatically mark doses as missed after threshold</string>
+    <string name="pref_missed_dose_threshold">Missed Dose Threshold (minutes)</string>
+    <string name="pref_missed_dose_threshold_summary">Minutes after scheduled time to mark dose as missed</string>
+
+    <string name="pref_category_refill">Default Refill Thresholds</string>
+    <string name="pref_refill_t1_life_dependent">Life-Dependent Warning (doses)</string>
+    <string name="pref_refill_t2_life_dependent">Life-Dependent Critical (doses)</string>
+    <string name="pref_refill_t1_very_important">Very Important Warning (doses)</string>
+    <string name="pref_refill_t2_very_important">Very Important Critical (doses)</string>
+    <string name="pref_refill_t1_beneficial">Beneficial Warning (doses)</string>
+    <string name="pref_refill_t2_beneficial">Beneficial Critical (doses)</string>
+    <string name="pref_refill_t1_summary">First warning threshold (higher value)</string>
+    <string name="pref_refill_t2_summary">Critical warning threshold (lower value)</string>
+
+    <string name="pref_category_emergency">Emergency Contacts</string>
+    <string name="pref_emergency_alerts">Emergency Alerts</string>
+    <string name="pref_emergency_alerts_summary">Send notifications to emergency contacts when doses are missed</string>
+    <string name="pref_emergency_email">Emergency Email</string>
+    <string name="pref_emergency_email_summary">Email address for emergency notifications</string>
+    <string name="pref_emergency_phone">Emergency Phone</string>
+    <string name="pref_emergency_phone_summary">Phone number for emergency notifications</string>
+
+    <string name="pref_category_appearance">Appearance</string>
+    <string name="pref_theme">Theme</string>
+    <string name="pref_theme_summary">Choose app color theme</string>
+
+    <!-- User Story 6: Emergency Contact Notifications (T250) -->
+    <string name="emergency_contact_title">Emergency Contact</string>
+    <string name="emergency_contact_name">Contact Name</string>
+    <string name="emergency_contact_phone">Phone Number</string>
+    <string name="emergency_contact_email">Email Address</string>
+    <string name="emergency_trigger_threshold">Missed Dose Threshold (1–10)</string>
+    <string name="emergency_life_dependent_only">Only notify for life-dependent medications</string>
+    <string name="emergency_contact_active">Contact is active</string>
+    <string name="emergency_contact_saved">Emergency contact saved</string>
+    <string name="emergency_contact_deleted">Emergency contact deleted</string>
+    <string name="emergency_no_contacts">No emergency contacts yet</string>
+    <string name="emergency_add_contact">Add Emergency Contact</string>
+    <string name="emergency_manage_contacts">Manage Emergency Contacts</string>
+    <string name="emergency_manage_contacts_summary">Add, edit, or remove emergency contacts</string>
+
+    <string name="error_required">This field is required</string>
+
+    <string name="emergency_alert_subject">Missed Medication Alert: %s</string>
+    <string name="emergency_alert_body">MEDICATION ALERT: %1$s has been missed.\nConsecutive missed doses: %2$d\nDose: %3$s\nCategory: %4$s\nLocation: %5$s\n\nThis is an automated message from Med Check Tag.</string>
+
+    <string name="permission_sms_rationale">SMS permission is needed to send emergency alerts to your contacts when critical medications are missed.</string>
+    <string name="permission_call_rationale">Phone permission is needed to initiate emergency calls when critical medications are missed.</string>
+    <string name="permission_location_rationale">Location permission helps include your location in emergency notifications sent to contacts.</string>
+    <string name="permission_denied_sms">SMS permission denied. Emergency SMS alerts will not be sent.</string>
+    <string name="permission_denied_call">Phone permission denied. Emergency calls will require manual dialing.</string>
+    <string name="permission_denied_location">Location permission denied. Emergency messages will not include location.</string>
 </resources>
 

@@ -165,22 +165,11 @@
             android:layout_height="wrap_content"
             android:paddingBottom="16dp" />
 
-        <!-- Alarm Configuration Section -->
-        <TextView
+        <!-- Alarm Configuration Fragment Container (T116) -->
+        <FrameLayout
+            android:id="@+id/alarm_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alarm Settings"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
-
-        <!-- Alarm configuration will be added in T114-T116 -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Default alarm settings will be applied"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:paddingBottom="16dp" />
 
         <!-- Error Message -->

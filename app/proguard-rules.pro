@@ -22,6 +22,9 @@
 -keep interface com.medchecktag.audio.IAudioFeedbackService { *; }
 -keep interface com.medchecktag.nfc.INFCHandler { *; }
 
+# Keep services (MissedDoseWorker, EmergencyNotificationService)
+-keep class com.medchecktag.services.** { *; }
+
 # Keep BroadcastReceivers
 -keep class * extends android.content.BroadcastReceiver { *; }
 

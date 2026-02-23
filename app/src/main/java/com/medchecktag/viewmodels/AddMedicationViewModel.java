@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.medchecktag.alarms.AlarmScheduler;
 import com.medchecktag.models.AlarmConfiguration;
 import com.medchecktag.models.Medication;
 import com.medchecktag.models.MedicationCategory;
@@ -55,6 +56,8 @@ public class AddMedicationViewModel extends AndroidViewModel {
     
     // Created medication ID (for NFC write)
     private String createdMedicationId;
+    // Cached medication for alarm scheduling (T120)
+    private Medication lastCreatedMedication;
     
     public AddMedicationViewModel(@NonNull Application application) {
         super(application);
@@ -341,6 +344,9 @@ public class AddMedicationViewModel extends AndroidViewModel {
         if (infoValue != null && !infoValue.trim().isEmpty()) {
             medication.medicationInfo = infoValue.trim();
         }
+
+        // Cache for alarm scheduling
+        this.lastCreatedMedication = medication;
         
         // Save to repository
         medicationRepository.insertMedication(medication, new MedicationRepository.OnResultCallback<Long>() {
@@ -404,6 +410,15 @@ public class AddMedicationViewModel extends AndroidViewModel {
         return config;
     }
     
+    /**
+     * T120: Schedule alarms for the most recently created medication.
+     */
+    public void scheduleAlarms(AlarmScheduler alarmScheduler) {
+        if (lastCreatedMedication != null && alarmScheduler != null) {
+            alarmScheduler.scheduleAlarmsForMedication(lastCreatedMedication);
+        }
+    }
+
     /**
      * Result class for save operation
      */

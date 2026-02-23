@@ -146,95 +146,128 @@ public class NFCWriteDialogFragment extends DialogFragment {
     }
     
     private void handleTagWrite(Tag tag) {
-        textStatus.setText("Writing to tag...");
+        textStatus.setText("Checking tag...");
         progressBar.setIndeterminate(true);
         
         // Write medication ID to tag in background thread
         new Thread(() -> {
             try {
-                // Write medication ID
-                boolean success = nfcHandler.writeMedicationId(tag, medicationId);
-                
-                if (success) {
-                    // Verify write
-                    String readId = nfcHandler.readMedicationId(tag);
-                    
-                    if (medicationId.equals(readId)) {
-                        // Save tag to database
-                        String tagId = bytesToHex(tag.getId());
-                        NFCTag nfcTag = new NFCTag(
-                            UUID.randomUUID().toString(),
-                            tagId,
-                            medicationId,
-                            null // No label for now
-                        );
-                        
-                        tagRepository.insertNFCTag(nfcTag, new MedicationRepository.OnResultCallback<Long>() {
-                            @Override
-                            public void onSuccess(Long result) {
-                                // Success - tag saved
-                                android.app.Activity activity = getActivity();
-                                if (activity != null && isAdded()) {
-                                    activity.runOnUiThread(() -> {
-                                        textStatus.setText("Success! Tag written.");
-                                        progressBar.setIndeterminate(false);
-                                        Toast.makeText(activity, "NFC tag written successfully", Toast.LENGTH_SHORT).show();
-                                        
-                                        if (writeCompleteListener != null) {
-                                            writeCompleteListener.onWriteSuccess();
-                                        }
-                                        
-                                        dismiss();
-                                    });
-                                }
-                            }
-                            
-                            @Override
-                            public void onError(Exception error) {
-                                // Error saving tag
-                                android.app.Activity activity = getActivity();
-                                if (activity != null && isAdded()) {
-                                    activity.runOnUiThread(() -> {
-                                        textStatus.setText("Tag written but failed to save: " + error.getMessage());
-                                        progressBar.setIndeterminate(false);
-                                        Toast.makeText(activity, "Error saving tag: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                                    });
-                                }
-                            }
-                        });
-                    } else {
-                        // Verification failed
-                        android.app.Activity activity = getActivity();
-                        if (activity != null && isAdded()) {
-                            activity.runOnUiThread(() -> {
-                                textStatus.setText("Write failed. Please try again.");
-                                progressBar.setIndeterminate(false);
-                                Toast.makeText(activity, "Tag verification failed", Toast.LENGTH_SHORT).show();
-                            });
-                        }
-                    }
-                } else {
-                    // Write failed
+                String tagHardwareId = bytesToHex(tag.getId());
+
+                // T172: Detect tag already in use
+                NFCTag existingTag = tagRepository.getTagByTagIdSync(tagHardwareId);
+                if (existingTag != null && !existingTag.medicationId.equals(medicationId)) {
+                    // T173: Warn user — tag belongs to another medication
                     android.app.Activity activity = getActivity();
                     if (activity != null && isAdded()) {
                         activity.runOnUiThread(() -> {
-                            textStatus.setText("Write failed. Please try again.");
-                            progressBar.setIndeterminate(false);
-                            Toast.makeText(activity, "Failed to write tag", Toast.LENGTH_SHORT).show();
+                            new androidx.appcompat.app.AlertDialog.Builder(activity)
+                                .setTitle(R.string.nfc_overwrite_title)
+                                .setMessage(getString(R.string.nfc_overwrite_message))
+                                .setPositiveButton(R.string.action_confirm, (d, w) -> {
+                                    // T174: User confirmed overwrite
+                                    performWrite(tag, tagHardwareId);
+                                })
+                                .setNegativeButton(R.string.action_cancel, (d, w) -> {
+                                    textStatus.setText(R.string.nfc_write_waiting);
+                                    progressBar.setIndeterminate(false);
+                                })
+                                .show();
                         });
                     }
+                    return;
                 }
+
+                // No conflict — write directly
+                performWrite(tag, tagHardwareId);
+
             } catch (Exception e) {
                 android.app.Activity activity = getActivity();
                 if (activity != null && isAdded()) {
                     activity.runOnUiThread(() -> {
                         textStatus.setText("Error: " + e.getMessage());
                         progressBar.setIndeterminate(false);
-                        Toast.makeText(activity, "Error writing tag: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     });
                 }
             }
         }).start();
+    }
+
+    /**
+     * T174-T177: Perform the actual NFC write, verify, and save tag to DB.
+     */
+    private void performWrite(Tag tag, String tagHardwareId) {
+        new Thread(() -> {
+            try {
+                textActivity(() -> textStatus.setText(R.string.nfc_write_writing));
+
+                // Write medication ID
+                boolean success = nfcHandler.writeMedicationId(tag, medicationId);
+                
+                if (success) {
+                    // T176: Verify write
+                    String readId = nfcHandler.readMedicationId(tag);
+                    
+                    if (medicationId.equals(readId)) {
+                        // T177: Save tag to database (supports multiple tags per medication)
+                        NFCTag nfcTag = new NFCTag(
+                            UUID.randomUUID().toString(),
+                            tagHardwareId,
+                            medicationId,
+                            null
+                        );
+                        
+                        tagRepository.insertNFCTag(nfcTag, new MedicationRepository.OnResultCallback<Long>() {
+                            @Override
+                            public void onSuccess(Long result) {
+                                textActivity(() -> {
+                                    textStatus.setText(R.string.nfc_write_success_status);
+                                    progressBar.setIndeterminate(false);
+                                    Toast.makeText(getActivity(), R.string.nfc_tag_written_successfully, Toast.LENGTH_SHORT).show();
+                                    if (writeCompleteListener != null) {
+                                        writeCompleteListener.onWriteSuccess();
+                                    }
+                                    dismiss();
+                                });
+                            }
+                            
+                            @Override
+                            public void onError(Exception error) {
+                                textActivity(() -> {
+                                    textStatus.setText(getString(R.string.nfc_tag_written_but_save_failed, error.getMessage()));
+                                    progressBar.setIndeterminate(false);
+                                });
+                            }
+                        });
+                    } else {
+                        // T176: Verification failed
+                        textActivity(() -> {
+                            textStatus.setText(R.string.nfc_write_failed);
+                            progressBar.setIndeterminate(false);
+                        });
+                    }
+                } else {
+                    // T175: Write failed
+                    textActivity(() -> {
+                        textStatus.setText(R.string.nfc_write_failed);
+                        progressBar.setIndeterminate(false);
+                    });
+                }
+            } catch (Exception e) {
+                textActivity(() -> {
+                    textStatus.setText(getString(R.string.nfc_write_error, e.getMessage()));
+                    progressBar.setIndeterminate(false);
+                });
+            }
+        }).start();
+    }
+
+    /** Helper to run on UI thread safely. */
+    private void textActivity(Runnable action) {
+        android.app.Activity activity = getActivity();
+        if (activity != null && isAdded()) {
+            activity.runOnUiThread(action);
+        }
     }
     
     private String bytesToHex(byte[] bytes) {

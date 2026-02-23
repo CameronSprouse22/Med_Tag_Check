@@ -66,6 +66,13 @@ public class MedicationRepository {
         return medicationDao.getByIdSync(medicationId);
     }
     
+    /**
+     * Get all active medications synchronously (for background workers)
+     */
+    public List<Medication> getAllActiveMedicationsSync() {
+        return medicationDao.getAllActiveSync();
+    }
+    
     // Mutation Operations
     
     public void insertMedication(Medication medication, OnResultCallback<Long> callback) {
